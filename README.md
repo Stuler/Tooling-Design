@@ -1,2 +1,2 @@
 # Tooling-Design
-Program that generates basic dimensions of nedcking machine tools
+Program that generates basic dimensions of necking machine tools
