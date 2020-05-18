@@ -1,4 +1,4 @@
 import os
 
 path = input('Zadaj cestu projektu: ')
-os.mkdir(path + '\' + 'Nářadí')
+os.mkdir(path + "\\" + "Nářadí")
