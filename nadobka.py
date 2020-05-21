@@ -15,6 +15,7 @@ class Nadobka:
     tloustka vnitrniho laku, tloustka vnejsiho laku
     """
     def __init__(self, 
+                projekt,
                 d_nad, 
                 h_nad,
                 t_kom,
@@ -22,6 +23,7 @@ class Nadobka:
                 t_vonk_lak = 0.02,
                 d_kom = 25.4
                 ):
+        self.projekt = projekt
         self.d_nad = float(d_nad)
         self.h_nad = float(h_nad)
         self.t_kom = float(t_kom)

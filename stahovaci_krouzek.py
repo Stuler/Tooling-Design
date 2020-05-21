@@ -13,10 +13,7 @@ class Stah_krouzek(Nad, Ram):
     def sekvence_krouzku(self, krouzky):
         self.krouzky = {}
         for i in range(n):
-            pass
-
-        
-         
+            pass       
 
 crown_nad = Nad(45, 136, 0.37, 0.03, 0.04)
 crown_dut = Dut(45, 0.24, 150)

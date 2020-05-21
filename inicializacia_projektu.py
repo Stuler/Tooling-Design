@@ -1,5 +1,6 @@
 from os import makedirs
-from design_file import vytvor_xls
+#from design_file import vytvor_xls
+from nadobka import Nadobka
     
 seznam_naradi = [
     "Sablony naradi"
@@ -21,6 +22,9 @@ path = input('Zadaj cestu projektu: ')
 for i in seznam_naradi:
     makedirs(path + "\\" + i)
 
+# Vytvori nadobku
+crown = Nadobka(45, 156, 0.37)
+
 # Vytvori navrhovy excel
-vytvor_xls(path)
+#vytvor_xls(path, 19)
 
