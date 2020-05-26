@@ -18,6 +18,7 @@ class Nadobka:
                 projekt,
                 d_nad, 
                 h_nad,
+                tlak,
                 t_kom,
                 t_vnut_lak = 0.02, 
                 t_vonk_lak = 0.02,
@@ -26,6 +27,7 @@ class Nadobka:
         self.projekt = projekt
         self.d_nad = float(d_nad)
         self.h_nad = float(h_nad)
+        self.tlak = int(tlak)
         self.t_kom = float(t_kom)
         self.t_vnut_lak = float(t_vnut_lak)
         self.t_vonk_lak = float(t_vonk_lak)

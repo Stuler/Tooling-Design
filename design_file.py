@@ -6,9 +6,9 @@ from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 
 # Vytvori navrhovy subor MS Excel
-def vytvor_xls(data, pocet_tahov):
+def vytvor_xls(path, data, pocet_tahov):
     wb = Workbook()
-    dest = "C:\\Python\\navrh_naradi.xlsx"
+    dest = path
     ws = wb.active
     ws.title = "Naradi"
 
