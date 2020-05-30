@@ -31,8 +31,7 @@ class Nadobka:
         self.t_kom = float(t_kom)
         self.t_vnut_lak = float(t_vnut_lak)
         self.t_vonk_lak = float(t_vonk_lak)
-        self.t_lak = t_vonk_lak + t_vnut_lak
-
+        
     def __str__(self):
         return (f"Prumer nadobky:  {self.d_nad}\n Vyska nadobky:  {self.h_nad}\n")
 
