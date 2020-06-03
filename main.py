@@ -1,16 +1,11 @@
 from nadobka import Nadobka as nad
 from nadobka import Dutinka as dut
 from nadobka import Rameno as ram
-from os import makedirs
+from inicializacia_projektu import vytvor_strom_projektu as strom
+from inicializacia_projektu import vygeneruj_oznacenie as gen
 
 # Uzivatel zada cestu ku korenovemu adresaru projektu aj s nazvom projektu
 # Napr C:\VAULTPRO_MCTEST\DWI\45\Crown
-# Vytvori podadresare projektu
-def vytvor_strom_projektu(seznam):
-    cesta = input('Zadaj cestu projektu: ')
-    for i in seznam:
-        makedirs(cesta + "\\" + i)
-
 seznam_naradi = [
     "Sablony naradi",
     "Stahovaci krouzky", 
@@ -23,9 +18,7 @@ seznam_naradi = [
     "Pruziny",
     "Navrhove soubory",]
 
-vytvor_strom_projektu(seznam_naradi)
-
-# Inicializacia nadobky
+# Inicializacia nadobky, dutinky a ramena
 nadobka = nad(
     input("Nazov projektu: "),
     input("Priemer nadobky: "),
@@ -44,5 +37,8 @@ rameno = ram(
     input("Priemer nadobky vo vyske ramena: "),
     input("Tloustka steny vo vyske ramena: "),
     input("Uhol ramena: "),
-    input("Pocet tahov: ")
+    input("Tvar ramena: "),
+    input("Pocet tahov: "),
         )
+
+strom(seznam_naradi)
