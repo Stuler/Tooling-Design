@@ -2,11 +2,11 @@ from nadobka import Nadobka as nad
 from nadobka import Dutinka as dut
 from nadobka import Rameno as ram
 from inicializacia_projektu import vytvor_strom_projektu as strom
-from inicializacia_projektu import vygeneruj_oznacenie as gen
+from inicializacia_projektu import vytvor_oznacenie as oznac
 
 # Uzivatel zada cestu ku korenovemu adresaru projektu aj s nazvom projektu
 # Napr C:\VAULTPRO_MCTEST\DWI\45\Crown
-seznam_naradi = [
+seznam_slozek = [
     "Sablony naradi",
     "Stahovaci krouzky", 
     "Chytaky", 
@@ -16,7 +16,19 @@ seznam_naradi = [
     "Sroubove cepy",
     "Trny",
     "Pruziny",
-    "Navrhove soubory",]
+    "Navrhove soubory",
+    ]
+
+seznam_naradi = [
+    "Stahovaci krouzky", 
+    "Chytaky", 
+    "Vodici pouzdra", 
+    "Navadeci krouzky", 
+    "Drzaky chytaku",
+    "Sroubove cepy",
+    "Trny",
+    "Pruziny",
+    ]
 
 # Inicializacia nadobky, dutinky a ramena
 nadobka = nad(
@@ -41,4 +53,4 @@ rameno = ram(
     input("Pocet tahov: "),
         )
 
-strom(seznam_naradi)
+strom(seznam_slozek)
