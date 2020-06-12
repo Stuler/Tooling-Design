@@ -31,8 +31,21 @@ def vytvor_oznacenie(d_nad, tlak, tvar_ramena, poc_tahov, h_nad = "h"):
             cisl_ozn = int(poc_cislo) + i
             cisla_nar.append(str(cisl_ozn))
             ozn_nar.append(stat_nazov[i] + "-" + str(cisla_nar[i]))
+            
         return ozn_nar
 
+def rozsah_oznacenia(naradie, poc_cislo, poc_tahov):
+    prve_cisla = [poc_cislo]
+    for i in naradie:
+        if poc_tahov % 10 == 0:
+            dalsie_cislo = int(((prve_cisla[-1]) + (poc_tahov - 1)) + 1)
+        else:
+            dalsie_cislo = int(((prve_cisla[-1]) + (poc_tahov - 1) ) / 10) * 10 + 11
+        prve_cisla.append(dalsie_cislo)
+    
+    return(prve_cisla)
+
+  
 seznam_naradi = [
     "Stahovaci krouzky", 
     "Chytaky", 
@@ -44,8 +57,11 @@ seznam_naradi = [
     "Pruziny",
     ]
 
-stah_kruzky = vytvor_oznacenie("45", "12", "FTP", 21)
+pocet_tahov = 9
+start_cislo = 101
+
+stah_kruzky = vytvor_oznacenie("45", "12", "FTP", pocet_tahov)
 print(stah_kruzky)
 
-#stah_kruzky_2 = vytvor_oznacenie(21)
-#print(stah_kruzky_2)
+rozsahy = rozsah_oznacenia(seznam_naradi, start_cislo, pocet_tahov)
+print(rozsahy)
