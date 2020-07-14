@@ -5,7 +5,6 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
 from main import nadobka, dutinka, rameno
-from inicializacia_projektu import vytvor_oznacenie as ozn
 
 # Vytvori navrhovy subor MS Excel
 def vytvor_data(path, data, pocet_tahov):
@@ -85,14 +84,11 @@ def vytvor_data(path, data, pocet_tahov):
     for row in rows:
         ws2.append(row)
 # Pocet tahov
-    for i in range(1, pocet_tahov+1):
-        ws2.cell(row = 3+i, column = 1).value = i
+    #for i in range(1, pocet_tahov+1):
+    #    ws2.cell(row = 3+i, column = 1).value = i
 # Oznaceni
-    oznacenie = ozn(str(int(nadobka.d_nad)), str(int(nadobka.tlak)),rameno.tvar_ram, pocet_tahov, str(int(nadobka.h_nad)))
-    o = 0
-    for i in range(1, pocet_tahov + 1):
-        ws2.cell(row = 3+i, column = 2).value = oznacenie[o]
-        o += 1
+    
+
 
     for i in data:
         ws2.append(i)

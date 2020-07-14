@@ -3,10 +3,9 @@ class Dutinka:
     Inicializuje dutinku s parametrami:
     Prumer dutinky, tloustka steny dutinky, vyska dutinky
     """
-    def __init__(self, d_dut, t_dut, h_dut):
-        self.d_dut = d_dut
-        self.t_dut = t_dut
-        self.h_dut = h_dut
+    def __init__(self, t_dut, h_dut):
+        self.t_dut = float(t_dut)
+        self.h_dut = float(h_dut)
 
 class Nadobka:
     """
@@ -32,17 +31,15 @@ class Nadobka:
         self.t_vnut_lak = float(t_vnut_lak)
         self.t_vonk_lak = float(t_vonk_lak)
         
-    def __str__(self):
-        return (f"Prumer nadobky:  {self.d_nad}\n Vyska nadobky:  {self.h_nad}\n")
-
 class Rameno:
     """
     Inicializuje vlastnosti ramene s parametrami:
     prumer zacatku ramene, vysledni tloustka ramene, uhel ramene
     """
-    def __init__(self, d_ram, t_ram, uhol_ram, tvar_ram, n):
+    def __init__(self, d_ram, t_ram, uhol_ram, tvar_ram, n, v = 0.03):
         self.d_ram = d_ram
         self.t_ram = t_ram
         self.uhol_ram = uhol_ram
         self.tvar_ram = tvar_ram # Pridat volbu pre tvar ramena
         self.n = n
+        self.v = float(v)
