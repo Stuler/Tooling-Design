@@ -1,4 +1,7 @@
 from tkinter import *
+from nadobka import Nadobka as nad
+from nadobka import Dutinka as dut
+from nadobka import Rameno as ram
 
 window=Tk()
 window.title("Návrh nářadí")
@@ -16,16 +19,16 @@ dut3.grid(row=2, column=1)
 dut4 = Label(window, text = "Výška dutinky")
 dut4.grid(row=3, column=1)
 
-prum_dut_value = StringVar
+prum_dut_value = DoubleVar()
 prum_dut = Entry(window,textvariable=prum_dut_value, width=5)
 prum_dut.grid(row=1, column=2)
 
-tl_dut_value = StringVar
-tl_dut = Entry(window,textvariable=prum_dut_value, width=5)
+tl_dut_value = DoubleVar()
+tl_dut = Entry(window,textvariable=tl_dut_value, width=5)
 tl_dut.grid(row=2, column=2)
 
-vys_dut_value = StringVar
-vys_dut = Entry(window,textvariable=prum_dut_value, width=5)
+vys_dut_value = IntVar()
+vys_dut = Entry(window,textvariable=vys_dut_value, width=5)
 vys_dut.grid(row=3, column=2)
 
 jedn1 = Label(window, text = "mm")
@@ -62,31 +65,31 @@ nad7.grid(row=10, column=1)
 nad8 = Label(window, text = "Tlaková specifikace")
 nad8.grid(row=11, column=1)
 
-prum_nad_value = StringVar
+prum_nad_value = DoubleVar()
 prum_nad = Entry(window,textvariable=prum_nad_value, width=5)
 prum_nad.grid(row=5, column=2)
 
-vys_nad_value = StringVar
+vys_nad_value = IntVar()
 vys_nad = Entry(window,textvariable=vys_nad_value, width=5)
 vys_nad.grid(row=6, column=2)
 
-tl_kom_value = StringVar
+tl_kom_value = DoubleVar()
 tl_kom = Entry(window,textvariable=tl_kom_value, width=5)
 tl_kom.grid(row=7, column=2)
 
-tl_lak_vnit_value = StringVar
+tl_lak_vnit_value = DoubleVar()
 tl_lak_vnit = Entry(window,textvariable=tl_lak_vnit_value, width=5)
 tl_lak_vnit.grid(row=8, column=2)
 
-tl_lak_ven_value = StringVar
+tl_lak_ven_value = DoubleVar()
 tl_lak_ven = Entry(window,textvariable=tl_lak_ven_value, width=5)
 tl_lak_ven.grid(row=9, column=2)
 
-prum_kom_value = StringVar
+prum_kom_value = DoubleVar()
 prum_kom = Entry(window,textvariable=prum_kom_value, width=5)
 prum_kom.grid(row=10, column=2)
 
-tlak_value = StringVar
+tlak_value = IntVar()
 tlak = Entry(window,textvariable=tlak_value, width=5)
 tlak.grid(row=11, column=2)
 
@@ -122,19 +125,33 @@ ram3 = Label(window, text = "Tloušťka ramena")
 ram3.grid(row=15, column=1)
 
 ram4 = Label(window, text = "Ůhel ramena")
-ram4.grid(row=16, column=1)
+ram4.grid(row=19, column=1)
 
-prum_ram_value = StringVar
+ram5 = Label(window, text = "Počet tahu")
+ram5.grid(row=17, column=1)
+
+ram6 = Label(window, text = "Vule chytáku")
+ram6.grid(row=18, column=1)
+
+prum_ram_value = DoubleVar()
 prum_ram = Entry(window,textvariable=prum_ram_value, width=5)
 prum_ram.grid(row=14, column=2)
 
-tl_ram_value = StringVar
+tl_ram_value = DoubleVar()
 tl_ram = Entry(window,textvariable=tl_ram_value, width=5)
 tl_ram.grid(row=15, column=2)
 
-uh_ram_value = StringVar
+uh_ram_value = DoubleVar()
 uh_ram = Entry(window,textvariable=uh_ram_value, width=5)
-uh_ram.grid(row=16, column=2)
+uh_ram.grid(row=19, column=2)
+
+poc_tahu_value = IntVar()
+poc_tahu = Entry(window,textvariable=poc_tahu_value, width=5)
+poc_tahu.grid(row=17, column=2)
+
+vule_chytak_value = DoubleVar()
+vule_chytak = Entry(window,textvariable=vule_chytak_value, width=5)
+vule_chytak.grid(row=18, column=2)
 
 jedn11 = Label(window, text = "mm")
 jedn11.grid(row=14, column=3)
@@ -143,16 +160,22 @@ jedn12 = Label(window, text = "mm")
 jedn12.grid(row=15, column=3)
 
 jedn13 = Label(window, text = "°")
-jedn13.grid(row=16, column=3)
+jedn13.grid(row=19, column=3)
+
+jedn14 = Label(window, text = "-")
+jedn14.grid(row=17, column=3)
+
+jedn15 = Label(window, text = "mm")
+jedn15.grid(row=18, column=3)
 
 # Tlacitka
 b1=Button(window, text="OK", width = 10)
-b1.grid(row=18, column=0)
+b1.grid(row=20, column=0)
 
 b2=Button(window, text="Reset", width = 10)
-b2.grid(row=18, column=1)
+b2.grid(row=20, column=1)
 
 b3=Button(window, text="Konec", width = 10)
-b3.grid(row=18, column=2)
+b3.grid(row=20, column=2)
 
 window.mainloop()

@@ -4,7 +4,7 @@
 
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
-from main import nadobka, dutinka, rameno
+import gui
 
 # Vytvori navrhovy subor MS Excel
 def vytvor_data(path, data, pocet_tahov):
@@ -48,31 +48,30 @@ def vytvor_data(path, data, pocet_tahov):
     ws1['C17'] = "Dram"
 
     # Treti stlpec
-    ws1['D3'] = rameno.t_ram
-    ws1['D4'] = nadobka.t_kom
+    ws1['D3'] = gui.tl_ram_value
+    ws1['D4'] = gui.tl_kom_value
 
-    ws1['D6'] = rameno.n
+    ws1['D6'] = gui.poc_tahu_value
 
     # Vypocet redukcie
-    konc_prum = 25.4 + 2*nadobka.t_kom + 2*(nadobka.t_vonk_lak+nadobka.t_vnut_lak)
-    rozdiel_priem = rameno.d_ram - konc_prum
-    red_tah = rozdiel_priem / rameno.n
-    rel_red = red_tah / rameno.d_ram
+    konc_prum = 25.4 + 2*gui.tl_kom_value + 2*(gui.tl_lak_ven_value+gui.tl_lak_vnit_value)
+    rozdiel_priem = gui.prum_ram_value - konc_prum
+    red_tah = rozdiel_priem / gui.poc_tahu_value
+    rel_red = red_tah / gui.prum_ram_value
     ws1['D7'] = round(rel_red * 100, 2)
 
     # Vypocet zmeny tloustky na tah
-    rozdiel_tlous = nadobka.t_kom - dutinka.t_dut
-    rel_rozdiel_tlous = round(rozdiel_tlous / rameno.n, 3)
+    rozdiel_tlous = gui.tl_kom_value - gui.tl_dut_value
+    rel_rozdiel_tlous = round(rozdiel_tlous / gui.poc_tahu_value, 3)
     ws1['D9'] = rel_rozdiel_tlous
 
-    ws1['D11'] = nadobka.t_vonk_lak
-    ws1['D12'] = nadobka.t_vnut_lak
-    ws1['D13'] = nadobka.t_vonk_lak + nadobka.t_vnut_lak
-    ws1['D14'] = rameno.v
+    ws1['D11'] = gui.tl_lak_ven_value
+    ws1['D12'] = gui.tl_lak_vnit_value
+    ws1['D13'] = gui.tl_lak_ven_value + gui.tl_lak_vnit_value
+    ws1['D14'] = gui.vule_chytak_value
 
-    ws1['D16'] = nadobka.d_nad
-    ws1['D17'] = rameno.d_ram
-
+    ws1['D16'] = gui.prum_nad_value
+    ws1['D17'] = gui.prum_ram_value
 
 # Stahovaci krouzky
     ws2 = wb.create_sheet(title="Stahovací kroužky")
@@ -87,9 +86,6 @@ def vytvor_data(path, data, pocet_tahov):
     #for i in range(1, pocet_tahov+1):
     #    ws2.cell(row = 3+i, column = 1).value = i
 # Oznaceni
-    
-
-
     for i in data:
         ws2.append(i)
  
