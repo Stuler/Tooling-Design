@@ -169,7 +169,7 @@ jedn15 = Label(window, text = "mm")
 jedn15.grid(row=18, column=3)
 
 # Tlacitka
-b1=Button(window, text="OK", width = 10)
+b1=Button(window, text="OK", command=vytvor_data(), width = 10)
 b1.grid(row=20, column=0)
 
 b2=Button(window, text="Reset", width = 10)
