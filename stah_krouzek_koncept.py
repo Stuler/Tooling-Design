@@ -1,5 +1,5 @@
 import os
-import design_file_2 as des
+import design_file as des
 from main import nadobka, dutinka, rameno
 from inicializacia_projektu import vytvor_oznacenie as ozn
 
@@ -43,4 +43,4 @@ d_s = sekvence_ds(d_c)
 kruzky = sekvencia_kruzkov(d_c, d_s, 19)
 
 des.vytvor_data("C:\\Python\\Test\\navrh_naradi.xlsx", kruzky, 19)
-#print(d_c)
+print(d_c)

@@ -1,11 +1,10 @@
-import os
+from os import makedirs
 from tkinter import *
 from nadobka import Nadobka as nad
 from nadobka import Dutinka as dut
 from nadobka import Rameno as ram
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
-from inicializacia_projektu import vytvor_oznacenie as ozn
 
 #####################
 ### Tvorba excelu ###
@@ -126,17 +125,86 @@ def sekvencia_kruzkov(rozmery_Dc, rozmery_Ds, pocet_tahov):
     for i in range(1, pocet_tahov+1):
         cisla_tahu.append(i)
 
-    oznacenie = ozn(prum_nad_value, tlak_value, uh_ram_value, 19, vys_nad_value)
+    oznacenie = vytvor_oznacenie(prum_nad_value, tlak_value, uh_ram_value, poc_tahu_value, vys_nad_value)
 
     stah_krouzek = list(zip(cisla_tahu, oznacenie, rozmery_Ds, rozmery_Dc))
     return(stah_krouzek)
 
-#d_c = sekvence_dc(40.23, 25.4, 0.37, 0.04, 19)
-#d_s = sekvence_ds(d_c)
-#kruzky = sekvencia_kruzkov(d_c, d_s, 19)
+d_c = sekvence_dc(40.23, 25.4, 0.37, 0.04, 19)
+d_s = sekvence_ds(d_c)
+kruzky = sekvencia_kruzkov(d_c, d_s, 19)
 
 #vytvor_data("C:\\Python\\Test\\navrh_naradi.xlsx", kruzky, 19)
 #print(d_c)
+
+
+#################################
+### Tvorba stromu a oznacenia ###
+def vytvor_strom_projektu(seznam):
+    cesta = input('Zadaj cestu projektu: ')
+    for i in seznam:
+        makedirs(cesta + "\\" + i)
+
+# Vygeneruje system oznacenia podla pouzivatela
+def vytvor_oznacenie(prum_nad_value, tlak_value, tvar_value, poc_tahu_value, vys_nad_value):
+    stat_nazov = []
+    cisla_nar = []
+    ozn_nar = []
+        
+    while True:  
+        prompt = input("Zadaj moznost:\n"
+                "1 - Vygenerovat oznacenie zo zadanych parametrov\n"
+                "2 - Vytvorit oznacenie podla uzivatela\n")
+        
+        if prompt == "1":
+                stat_ozn = ("NA-" + d_nad + "-" + h_nad + "-" + tlak + "-" + tvar_ramena)
+        elif prompt == "2":
+            stat_ozn = input("Zadaj staticku cast oznacenia naradia: ")
+        else:
+            print("\nNeplatna moznost! Skus znova!")
+            continue
+        
+        poc_cislo = input("Uved cislo prveho stahovacieho kruzku: ")
+        for i in range(poc_tahov):
+            stat_nazov.append(stat_ozn)
+            cisl_ozn = int(poc_cislo) + i
+            cisla_nar.append(str(cisl_ozn))
+            ozn_nar.append(stat_nazov[i] + "-" + str(cisla_nar[i]))
+            
+        return ozn_nar
+
+def rozsah_oznacenia(naradie, poc_cislo, poc_tahov):
+    prve_cisla = [poc_cislo]
+    for i in naradie:
+        if poc_tahov % 10 == 0:
+            dalsie_cislo = int(((prve_cisla[-1]) + (poc_tahov - 1)) + 1)
+        else:
+            dalsie_cislo = int(((prve_cisla[-1]) + (poc_tahov - 1) ) / 10) * 10 + 11
+        prve_cisla.append(dalsie_cislo)
+    
+    return(prve_cisla)
+
+  
+seznam_naradi = [
+    "Stahovaci krouzky", 
+    "Chytaky", 
+    "Vodici pouzdra", 
+    "Navadeci krouzky", 
+    "Drzaky chytaku",
+    "Sroubove cepy",
+    "Trny",
+    "Pruziny",
+    ]
+
+#pocet_tahov = 9
+#start_cislo = 101
+
+#stah_kruzky = vytvor_oznacenie("45", "12", "FTP", pocet_tahov)
+#print(stah_kruzky)
+
+#rozsahy = rozsah_oznacenia(seznam_naradi, start_cislo, pocet_tahov)
+#print(rozsahy)
+
 
 ##################
 ### Tvorba GUI ###
@@ -202,6 +270,9 @@ nad7.grid(row=10, column=1)
 nad8 = Label(window, text = "Tlaková specifikace")
 nad8.grid(row=11, column=1)
 
+nad9 = Label(window, text = "Tvar ramena")
+nad8.grid(row=12, column=1)
+
 prum_nad_value = DoubleVar()
 prum_nad = Entry(window,textvariable=prum_nad_value, width=5)
 prum_nad.grid(row=5, column=2)
@@ -229,6 +300,10 @@ prum_kom.grid(row=10, column=2)
 tlak_value = IntVar()
 tlak = Entry(window,textvariable=tlak_value, width=5)
 tlak.grid(row=11, column=2)
+
+tvar_value = StringVar()
+tvar = Entry(window,textvariable=tvar_value, width=5)
+tvar.grid(row=12, column=2)
 
 jedn4 = Label(window, text = "mm")
 jedn4.grid(row=5, column=3)
