@@ -4,7 +4,6 @@ from nadobka import Rameno as ram
 from inicializacia_projektu import vytvor_strom_projektu as strom
 from inicializacia_projektu import vytvor_oznacenie as oznac
 
-
 # Uzivatel zada cestu ku korenovemu adresaru projektu aj s nazvom projektu
 # Napr C:\VAULTPRO_MCTEST\DWI\45\Crown
 seznam_slozek = [
@@ -34,23 +33,24 @@ seznam_naradi = [
 # Inicializacia nadobky, dutinky a ramena
 nadobka = nad(
     input("Nazov projektu: "),
-    float(input("Priemer nadobky: ")),
-    float(input("Vyska nadobky: ")),
-    int(input("Tlaková špecifikácia: ")),
-    float(input("Hrubka steny kominku: ")),
+    input("Priemer nadobky: "),
+    input("Vyska nadobky: "),
+    input("Tlaková špecifikácia: "),
+    input("Hrubka steny kominku: "),
         )
 
 dutinka = dut(
-    float(input("Tloustka steny dutinky: ")),
-    int(input("Vyska dutinky: ")),
+    input("Priemer dutinky: "),
+    input("Tloustka steny dutinky: "),
+    input("Vyska dutinky: "),
         )
 
 rameno = ram(
-    float(input("Priemer nadobky vo vyske ramena: ")),
-    float(input("Tloustka steny vo vyske ramena: ")),
-    float(input("Uhol ramena: ")),
+    input("Priemer nadobky vo vyske ramena: "),
+    input("Tloustka steny vo vyske ramena: "),
+    input("Uhol ramena: "),
     input("Tvar ramena: "),
-    int(input("Pocet tahov: ")),
+    input("Pocet tahov: "),
         )
 
-#strom(seznam_slozek)
+strom(seznam_slozek)
