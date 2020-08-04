@@ -1,6 +1,5 @@
 import os
 
-import design_file_2 as des
 from inicializacia_projektu import vytvor_oznacenie as ozn
 from main import dutinka, nadobka, rameno
 from openpyxl import Workbook, load_workbook
@@ -39,14 +38,6 @@ def sekvencia_kruzkov(rozmery_Dc, rozmery_Ds, pocet_tahov):
     
     stah_krouzek = list(zip(cisla_tahu, rozmery_Ds, rozmery_Dc))
     return(stah_krouzek)
-
-
-d_c = sekvence_dc(40.23, 25.4, 0.37, 0.04, 19)
-d_s = sekvence_ds(d_c)
-kruzky = sekvencia_kruzkov(d_c, d_s, 19)
-
-des.vytvor_data("C:\\Python\\Test\\navrh_naradi.xlsx", kruzky, 19)
-#print(d_c)
 
 
 # Modul vytvori navrhovy excel
@@ -139,3 +130,10 @@ def vytvor_data(path, data, pocet_tahov):
         ws2.append(i)
  
     wb.save(dest)
+
+d_c = sekvence_dc(40.23, 25.4, 0.37, 0.04, 19)
+d_s = sekvence_ds(d_c)
+kruzky = sekvencia_kruzkov(d_c, d_s, 19)
+
+vytvor_data("C:\\Python\\Test\\navrh_naradi.xlsx", kruzky, 19)
+#print(d_c)

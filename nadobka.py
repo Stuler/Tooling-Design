@@ -4,9 +4,9 @@ class Dutinka:
     Prumer dutinky, tloustka steny dutinky, vyska dutinky
     """
     def __init__(self, d_dut, t_dut, h_dut):
-        self.d_dut = d_dut
-        self.t_dut = t_dut
-        self.h_dut = h_dut
+        self.d_dut = float(d_dut)
+        self.t_dut = float(t_dut)
+        self.h_dut = float(h_dut)
 
 class Nadobka:
     """
@@ -41,8 +41,8 @@ class Rameno:
     prumer zacatku ramene, vysledni tloustka ramene, uhel ramene
     """
     def __init__(self, d_ram, t_ram, uhol_ram, tvar_ram, n):
-        self.d_ram = d_ram
-        self.t_ram = t_ram
-        self.uhol_ram = uhol_ram
-        self.tvar_ram = tvar_ram # Pridat volbu pre tvar ramena
-        self.n = n
+        self.d_ram = float(d_ram)
+        self.t_ram = float(t_ram)
+        self.uhol_ram = int(uhol_ram)
+        self.tvar_ram = str(tvar_ram) # Pridat volbu pre tvar ramena
+        self.n = int(n)
