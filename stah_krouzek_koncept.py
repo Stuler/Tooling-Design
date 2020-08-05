@@ -2,6 +2,7 @@ import os
 
 import design_file_2 as des
 from inicializacia_projektu import vytvor_oznacenie as ozn
+from inicializacia_projektu import vytvor_strom_projektu as strom
 from main import dutinka, nadobka, rameno
 
 
@@ -34,8 +35,8 @@ def sekvencia_kruzkov(rozmery_Dc, rozmery_Ds, pocet_tahov):
     for i in range(1, pocet_tahov+1):
         cisla_tahu.append(i)
 
-    
-    stah_krouzek = list(zip(cisla_tahu, rozmery_Ds, rozmery_Dc))
+    oznacenie = ozn(str(int(nadobka.d_nad)), str(int(nadobka.tlak)),rameno.tvar_ram, 19, str(int(nadobka.h_nad)))
+    stah_krouzek = list(zip(cisla_tahu, oznacenie, rozmery_Ds, rozmery_Dc))
     return(stah_krouzek)
 
 

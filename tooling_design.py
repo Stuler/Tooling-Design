@@ -1,6 +1,6 @@
 import os
-
 from inicializacia_projektu import vytvor_oznacenie as ozn
+from inicializacia_projektu import vytvor_strom_projektu as strom
 from main import dutinka, nadobka, rameno
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
@@ -36,7 +36,8 @@ def sekvencia_kruzkov(rozmery_Dc, rozmery_Ds, pocet_tahov):
         cisla_tahu.append(i)
 
     
-    stah_krouzek = list(zip(cisla_tahu, rozmery_Ds, rozmery_Dc))
+    oznacenie = ozn(str(int(nadobka.d_nad)), str(int(nadobka.tlak)),rameno.tvar_ram, 19, str(int(nadobka.h_nad)))
+    stah_krouzek = list(zip(cisla_tahu, oznacenie, rozmery_Ds, rozmery_Dc))
     return(stah_krouzek)
 
 
@@ -131,9 +132,20 @@ def vytvor_data(path, data, pocet_tahov):
  
     wb.save(dest)
 
-d_c = sekvence_dc(40.23, 25.4, 0.37, 0.04, 19)
+seznam_naradi = [
+    "Stahovaci krouzky", 
+    "Chytaky", 
+    "Vodici pouzdra", 
+    "Navadeci krouzky", 
+    "Drzaky chytaku",
+    "Sroubove cepy",
+    "Trny",
+    "Pruziny",
+    ]
+
+d_c = sekvence_dc(rameno.d_ram, 25.4, nadobka.t_kom, nadobka.t_vnut_lak+nadobka.t_vonk_lak, rameno.n)
 d_s = sekvence_ds(d_c)
 kruzky = sekvencia_kruzkov(d_c, d_s, 19)
 
-vytvor_data("C:\\Python\\Test\\navrh_naradi.xlsx", kruzky, 19)
+vytvor_data(strom(seznam_naradi)+"\\ navrh_naradi.xlsx", kruzky, rameno.n)
 #print(d_c)

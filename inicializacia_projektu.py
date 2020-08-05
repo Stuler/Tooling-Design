@@ -5,6 +5,7 @@ def vytvor_strom_projektu(seznam):
     cesta = input('Zadaj cestu projektu: ')
     for i in seznam:
         makedirs(cesta + "\\" + i)
+    return(cesta)
 
 # Vygeneruje system oznacenia podla pouzivatela
 def vytvor_oznacenie(d_nad, tlak, tvar_ramena, poc_tahov, h_nad = "h"):
@@ -56,6 +57,8 @@ seznam_naradi = [
     "Trny",
     "Pruziny",
     ]
+
+#strom = vytvor_strom_projektu(seznam_naradi)
 
 #pocet_tahov = 9
 #start_cislo = 101
