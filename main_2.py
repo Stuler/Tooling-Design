@@ -1,10 +1,6 @@
 from nadobka import Nadobka as nad
 from nadobka import Dutinka as dut
 from nadobka import Rameno as ram
-from inicializacia_projektu import vytvor_strom_projektu as strom
-from inicializacia_projektu import vytvor_oznacenie as oznac
-import gui
-
 
 # Uzivatel zada cestu ku korenovemu adresaru projektu aj s nazvom projektu
 # Napr C:\VAULTPRO_MCTEST\DWI\45\Crown
@@ -42,6 +38,7 @@ nadobka = nad(
         )
 
 dutinka = dut(
+    float(input("Prumer dutinky: ")),
     float(input("Tloustka steny dutinky: ")),
     int(input("Vyska dutinky: ")),
         )

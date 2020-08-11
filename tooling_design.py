@@ -1,11 +1,59 @@
-import os
-from inicializacia_projektu import vytvor_oznacenie as ozn
-from inicializacia_projektu import vytvor_strom_projektu as strom
-from main import dutinka, nadobka, rameno
+from os import makedirs
+from main_2 import dutinka, nadobka, rameno
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
 
+# Vytvori podadresare projektu
+def vytvor_strom_projektu(seznam):
+    cesta = input('Zadaj cestu projektu: ')
+    for i in seznam:
+        makedirs(cesta + "\\" + i)
+    return(cesta)
 
+# Vygeneruje system oznacenia podla pouzivatela
+def start_cislo():
+    prve_cislo = int(input("Uved koncove cislo prveho stahovacieho kruzku: "))
+    return prve_cislo
+
+def vytvor_oznacenie(d_nad, tlak, tvar_ramena, poc_tahov, poc_cislo, h_nad = "h"):
+    stat_nazov = []
+    cisla_nar = []
+    ozn_nar = []
+            
+    while True:  
+        prompt = input("Zadaj moznost:\n"
+                "1 - Vygenerovat oznacenie zo zadanych parametrov\n"
+                "2 - Vytvorit oznacenie podla uzivatela\n")
+        
+        if prompt == "1":
+                stat_ozn = ("NA-" + d_nad + "-" + h_nad + "-" + tlak + "-" + tvar_ramena)
+        elif prompt == "2":
+            stat_ozn = input("Zadaj staticku cast oznacenia naradia: ")
+        else:
+            print("\nNeplatna moznost! Skus znova!")
+            continue
+                
+        for i in range(poc_tahov):
+            stat_nazov.append(stat_ozn)
+            cisl_ozn = int(poc_cislo) + i
+            cisla_nar.append(str(cisl_ozn))
+            ozn_nar.append(stat_nazov[i] + "-" + str(cisla_nar[i]))
+            
+        return ozn_nar
+
+def rozsah_oznacenia(naradie, poc_cislo, poc_tahov):
+    poc_cislo = start_cislo()
+    prve_cisla = [poc_cislo]
+    for i in naradie:
+        if poc_tahov % 10 == 0:
+            dalsie_cislo = int(((prve_cisla[-1]) + (poc_tahov - 1)) + 1)
+        else:
+            dalsie_cislo = int(((prve_cisla[-1]) + (poc_tahov - 1) ) / 10) * 10 + 11
+        prve_cisla.append(dalsie_cislo)
+    
+    return(prve_cisla)
+
+### Stahobvaci krouzky ###
 def sekvence_dc(d_ram, d_kom, t_kom, t_lak, n):
     d_avg = d_ram - (d_kom + 2*t_kom + 2*t_lak)
     red_avg = d_avg / n 
@@ -28,25 +76,45 @@ def sekvence_ds(rozmery_dc):
 
     return (sekv_Ds)
 
-def sekvencia_kruzkov(rozmery_Dc, rozmery_Ds, pocet_tahov):
+def sekvencia_kruzkov(rozmery_Dc, rozmery_Ds, pocet_tahov,cis):
     
     cisla_tahu = []
             
-    for i in range(1, pocet_tahov+1):
+    for i in range(1, rameno.n+1):
         cisla_tahu.append(i)
 
-    
-    oznacenie = ozn(str(int(nadobka.d_nad)), str(int(nadobka.tlak)),rameno.tvar_ram, 19, str(int(nadobka.h_nad)))
+    oznacenie = vytvor_oznacenie(str(int(nadobka.d_nad)), str(int(nadobka.tlak)),rameno.tvar_ram, rameno.n, cis, str(int(nadobka.h_nad)))
     stah_krouzek = list(zip(cisla_tahu, oznacenie, rozmery_Ds, rozmery_Dc))
     return(stah_krouzek)
 
+### Chytaky ###
+def sekvencia_chytakov(dc_kr, poc_tahov,cis):
 
+    sekv_D = []
+    sekv_d = []
+
+    cisla_tahu = []
+            
+    for i in range(1, rameno.n+1):
+        cisla_tahu.append(i)
+
+
+    for i in (dc_kr):
+        D_ch =  round(i - 0.6, 2)
+        d_ch = round(D_ch - 5.5, 2)
+        sekv_D.append(D_ch)
+        sekv_d.append(d_ch)
+
+    oznacenie = vytvor_oznacenie(str(int(nadobka.d_nad)), str(int(nadobka.tlak)),rameno.tvar_ram, rameno.n, cis, str(int(nadobka.h_nad)))
+    chytaky = list(zip(cisla_tahu, oznacenie, sekv_D, sekv_d))
+    return(chytaky)
+ 
 # Modul vytvori navrhovy excel
 # Funkcie modulu sluzia na vytvorenie tabuliek s rozmermi jednotlivych naradi
 # a na vytvorenie tabuliek pre parametricke modelovanie sucasti
 
 # Vytvori navrhovy subor MS Excel
-def vytvor_data(path, data, pocet_tahov):
+def vytvor_data(path, st_kr, chyt, pocet_tahov):
     wb = Workbook()
     dest = path
     ws1 = wb.active
@@ -112,22 +180,28 @@ def vytvor_data(path, data, pocet_tahov):
     ws1['D16'] = nadobka.d_nad
     ws1['D17'] = rameno.d_ram
 
-
 # Stahovaci krouzky
     ws2 = wb.create_sheet(title="Stahovací kroužky")
     ws2['A2'] = "Stahovací kroužky"
-    rows = [
+    rows_st_krouzky = [
         ["Tah", "Oznaceni", "Ds", "Dc", "Rc", "R", "Lc", "XRc"]
     ]
-# Legenda
-    for row in rows:
+
+    for row in rows_st_krouzky:
         ws2.append(row)
-# Pocet tahov
-    #for i in range(1, pocet_tahov+1):
-    #    ws2.cell(row = 3+i, column = 1).value = i
+
 # Oznaceni
-    
-    for i in data:
+    for i in st_kr:
+        ws2.append(i)
+
+    ws2['A30'] = "Chytáky"
+    rows_chytaky = [
+        ["Tah", "Oznaceni", "D", "d"]
+    ]
+    for row in rows_chytaky:
+        ws2.append(row)
+
+    for i in chyt:
         ws2.append(i)
  
     wb.save(dest)
@@ -143,9 +217,11 @@ seznam_naradi = [
     "Pruziny",
     ]
 
+rozsahy = rozsah_oznacenia(seznam_naradi, start_cislo, rameno.n)
+
 d_c = sekvence_dc(rameno.d_ram, 25.4, nadobka.t_kom, nadobka.t_vnut_lak+nadobka.t_vonk_lak, rameno.n)
 d_s = sekvence_ds(d_c)
-kruzky = sekvencia_kruzkov(d_c, d_s, 19)
+kruzky = sekvencia_kruzkov(d_c, d_s, rameno.n, rozsahy[0])
+chytaky = sekvencia_chytakov(d_c, rameno.n, rozsahy[1])
 
-vytvor_data(strom(seznam_naradi)+"\\ navrh_naradi.xlsx", kruzky, rameno.n)
-#print(d_c)
+vytvor_data(vytvor_strom_projektu(seznam_naradi)+"\\ navrh_naradi.xlsx", kruzky, chytaky, rameno.n)

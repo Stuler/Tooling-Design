@@ -44,5 +44,5 @@ class Rameno:
         self.d_ram = float(d_ram)
         self.t_ram = float(t_ram)
         self.uhol_ram = int(uhol_ram)
-        self.tvar_ram = str(tvar_ram) # Pridat volbu pre tvar ramena
+        self.tvar_ram = str(tvar_ram) 
         self.n = int(n)

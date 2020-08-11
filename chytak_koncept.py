@@ -1,6 +1,5 @@
 import os
-import design_file as des
-import stah_krouzek_koncept as kr
+from stah_krouzek_koncept import sekvence_dc as kr
 
 def sekvencia_chytakov(dc_kr):
 
@@ -16,6 +15,6 @@ def sekvencia_chytakov(dc_kr):
     chytaky = list(zip(sekv_D, sekv_d))
     return(chytaky)
 
-rozmery_dc = kr.sekvence_dc(40.23, 25.4, 0.37, 0.04, 19)
+rozmery_dc = kr(40.23, 25.4, 0.37, 0.04, 19)
 rozmery_chytaku = sekvencia_chytakov(rozmery_dc)
 print(rozmery_chytaku)

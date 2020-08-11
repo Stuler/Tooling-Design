@@ -60,11 +60,11 @@ seznam_naradi = [
 
 #strom = vytvor_strom_projektu(seznam_naradi)
 
-#pocet_tahov = 9
-#start_cislo = 101
+pocet_tahov = 9
+start_cislo = 101
 
-#stah_kruzky = vytvor_oznacenie("45", "12", "FTP", pocet_tahov)
-#print(stah_kruzky)
+stah_kruzky = vytvor_oznacenie("45", "12", "FTP", pocet_tahov)
+print(stah_kruzky)
 
-#rozsahy = rozsah_oznacenia(seznam_naradi, start_cislo, pocet_tahov)
-#print(rozsahy)
+rozsahy = rozsah_oznacenia(seznam_naradi, start_cislo, pocet_tahov)
+print(rozsahy)
