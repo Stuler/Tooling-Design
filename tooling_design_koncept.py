@@ -93,15 +93,18 @@ def sekvencia_chytakov(dc_kr, poc_tahov,cis):
 
     sekv_D = []
     sekv_d = []
-
     cisla_tahu = []
-            
+
+    rozdiel_tlous = nadobka.t_kom - dutinka.t_dut
+    rel_rozdiel_tlous = round(rozdiel_tlous / rameno.n, 3)
+    tl_steny = [dutinka.t_dut]
+    for i in range(1, rameno.n+1):
+        tl_steny_tah = dutinka.t_dut + i*rel_rozdiel_tlous
+        tl_steny.append(tl_steny_tah)
+
     for i in range(1, rameno.n+1):
         cisla_tahu.append(i)
-
-
-    for i in (dc_kr):
-        D_ch =  round(i - 0.6, 2)
+        D_ch = round(dc_kr[i-1] - 2*(nadobka.t_vonk_lak + nadobka.t_vnut_lak) - 2*0.03 - 2*(tl_steny[i-1]), 2)
         d_ch = round(D_ch - 5.5, 2)
         sekv_D.append(D_ch)
         sekv_d.append(d_ch)
@@ -110,6 +113,10 @@ def sekvencia_chytakov(dc_kr, poc_tahov,cis):
     chytaky = list(zip(cisla_tahu, oznacenie, sekv_D, sekv_d))
     return(chytaky)
  
+# Modul vytvori navrhovy excel
+# Funkcie modulu sluzia na vytvorenie tabuliek s rozmermi jednotlivych naradi
+# a na vytvorenie tabuliek pre parametricke modelovanie sucasti
+
 # Vytvori navrhovy subor MS Excel
 def vytvor_data(path, st_kr, chyt, pocet_tahov):
     wb = Workbook()
