@@ -40,9 +40,10 @@ class Rameno:
     Inicializuje vlastnosti ramene s parametrami:
     prumer zacatku ramene, vysledni tloustka ramene, uhel ramene
     """
-    def __init__(self, d_ram, t_ram, uhol_ram, tvar_ram, n):
+    def __init__(self, d_ram, t_ram, uhol_ram, tvar_ram, n, vule = 0.03):
         self.d_ram = float(d_ram)
         self.t_ram = float(t_ram)
         self.uhol_ram = int(uhol_ram)
         self.tvar_ram = str(tvar_ram) 
         self.n = int(n)
+        self.vule = float(vule)

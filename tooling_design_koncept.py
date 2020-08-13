@@ -117,7 +117,7 @@ def sekvencia_chytakov(dc_kr, poc_tahov,cis):
 # Funkcie modulu sluzia na vytvorenie tabuliek s rozmermi jednotlivych naradi
 # a na vytvorenie tabuliek pre parametricke modelovanie sucasti
 
-# Vytvori navrhovy subor MS Excel
+#### Vytvori navrhovy subor MS Excel ####
 def vytvor_data(path, st_kr, chyt, pocet_tahov):
     wb = Workbook()
     dest = path
@@ -159,6 +159,7 @@ def vytvor_data(path, st_kr, chyt, pocet_tahov):
     ws1['C17'] = "Dram"
 
     # Treti stlpec
+    ws1['D2'] = dutinka.t_dut
     ws1['D3'] = rameno.t_ram
     ws1['D4'] = nadobka.t_kom
 
@@ -179,7 +180,7 @@ def vytvor_data(path, st_kr, chyt, pocet_tahov):
     ws1['D11'] = nadobka.t_vonk_lak
     ws1['D12'] = nadobka.t_vnut_lak
     ws1['D13'] = nadobka.t_vonk_lak + nadobka.t_vnut_lak
-    ws1['D14'] = rameno.n
+    ws1['D14'] = rameno.vule
 
     ws1['D16'] = nadobka.d_nad
     ws1['D17'] = rameno.d_ram
