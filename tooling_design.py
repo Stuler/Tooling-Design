@@ -186,7 +186,7 @@ def vytvor_data(path, st_kr, chyt, pocet_tahov):
     ws1['D17'] = rameno.d_ram
 
 # Stahovaci krouzky
-    ws2 = wb.create_sheet(title="Stahovací kroužky")
+    ws2 = wb.create_sheet(title="NARADI")
     ws2['A2'] = "Stahovací kroužky"
     rows_st_krouzky = [
         ["Tah", "Oznaceni", "Ds", "Dc", "Rc", "R", "Lc", "XRc"]
