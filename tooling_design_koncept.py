@@ -54,7 +54,7 @@ def rozsah_oznacenia(naradie, poc_cislo, poc_tahov):
     
     return(prve_cisla)
 
-### Stahobvaci krouzky ###
+### Stahovaci krouzky ###
 def sekvence_dc(d_ram, d_kom, t_kom, t_lak, n):
     d_avg = d_ram - (d_kom + 2*t_kom + 2*t_lak)
     red_avg = d_avg / n 
@@ -185,8 +185,16 @@ def vytvor_data(path, st_kr, chyt, pocet_tahov):
     ws1['D16'] = nadobka.d_nad
     ws1['D17'] = rameno.d_ram
 
+# Zoznam oznacenia buniek
+    prva_bunka = str("ws2['A4']")
+    cislo_bunky = str(prva_bunka[6])
+    bunka = [prva_bunka]
+    for i in range(1, rameno.n+1):
+        bunka_cislo = int(cislo_bunky)+i
+        bunka.append("ws2['A"+str(bunka_cislo)+"']")
+    
 # Stahovaci krouzky
-    ws2 = wb.create_sheet(title="Stahovací kroužky")
+    ws2 = wb.create_sheet(title="NARADI")
     ws2['A2'] = "Stahovací kroužky"
     rows_st_krouzky = [
         ["Tah", "Oznaceni", "Ds", "Dc", "Rc", "R", "Lc", "XRc"]
@@ -195,18 +203,16 @@ def vytvor_data(path, st_kr, chyt, pocet_tahov):
     for row in rows_st_krouzky:
         ws2.append(row)
 
-    for i in st_kr:
-        ws2.append(i)
+# Interaktivny excel
+    ws2['A4']=1
+    cisla_tahov = []
+    for i in range(1, rameno.n+1):
+        riadok_c_tahu = ("A4"+i)
+        cisla_tahov.append(riadok_c_tahu)
 
-    ws2['A'+str(3+rameno.n+1)] = "Chytáky"
-    rows_chytaky = [
-        ["Tah", "Oznaceni", "D", "d"]
-    ]
-    for row in rows_chytaky:
-        ws2.append(row)
-
-    for i in chyt:
-        ws2.append(i)
+    bunka[1] = cisla_tahov[1]         
+        
+    ws2['A44']=("=A43+1")
  
     wb.save(dest)
 #### Konec tvorby .xls ####
