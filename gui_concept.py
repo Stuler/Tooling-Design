@@ -1,7 +1,5 @@
 from tkinter import *
-from nadobka import Nadobka as nad
-from nadobka import Dutinka as dut
-from nadobka import Rameno as ram
+import backend
 
 class Window():
     def __init__(self, window):
@@ -127,13 +125,13 @@ class Window():
         ram3.grid(row=15, column=1)
 
         ram4 = Label(window, text = "Ůhel ramena")
-        ram4.grid(row=19, column=1)
+        ram4.grid(row=18, column=1)
 
         ram5 = Label(window, text = "Počet tahu")
-        ram5.grid(row=17, column=1)
+        ram5.grid(row=19, column=1)
 
         ram6 = Label(window, text = "Vule chytáku")
-        ram6.grid(row=18, column=1)
+        ram6.grid(row=17, column=1)
 
         self.prumRam_value = DoubleVar()
         self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
@@ -145,15 +143,15 @@ class Window():
 
         self.uhRam_value = DoubleVar()
         self.uhRam = Entry(window,textvariable=self.uhRam_value, width=5)
-        self.uhRam.grid(row=19, column=2)
+        self.uhRam.grid(row=18, column=2)
 
         self.pocTah_value = IntVar()
         self.pocTah = Entry(window,textvariable=self.pocTah_value, width=5)
-        self.pocTah.grid(row=17, column=2)
+        self.pocTah.grid(row=19, column=2)
 
         self.vuleChyt_value = DoubleVar()
         self.vuleChyt = Entry(window,textvariable=self.vuleChyt_value, width=5)
-        self.vuleChyt.grid(row=18, column=2)
+        self.vuleChyt.grid(row=17, column=2)
 
         jedn11 = Label(window, text = "mm")
         jedn11.grid(row=14, column=3)
@@ -162,23 +160,46 @@ class Window():
         jedn12.grid(row=15, column=3)
 
         jedn13 = Label(window, text = "°")
-        jedn13.grid(row=19, column=3)
+        jedn13.grid(row=18, column=3)
 
         jedn14 = Label(window, text = "-")
-        jedn14.grid(row=17, column=3)
+        jedn14.grid(row=19, column=3)
 
         jedn15 = Label(window, text = "mm")
-        jedn15.grid(row=18, column=3)
+        jedn15.grid(row=17, column=3)
+
+        # Cesta projektu
+        projectPath = Label(window, text = "Cesta projektu:")
+        projectPath.grid(row=20, column=0)
+
+        self.projPath_value = StringVar()
+        self.projPath = Entry(window,textvariable=self.projPath_value, width=40)
+        self.projPath.grid(row=20, column=1, columnspan=3)
+
+        # Oznacenie naradia
+        oznNar = Label(window, text = "Oznacenie naradia:")
+        oznNar.grid(row=21, column=0)
+
+        self.oznNar_value = StringVar()
+        self.oznNar = Entry(window,textvariable=self.oznNar_value, width=40)
+        self.oznNar.grid(row=21, column=1, columnspan=3)
 
         # Tlacitka
         b1=Button(window, text="OK",  width = 10)
-        b1.grid(row=20, column=0)
+        b1.grid(row=23, column=0)
 
         b2=Button(window, text="Reset", width = 10)
-        b2.grid(row=20, column=1)
+        b2.grid(row=23, column=1)
 
         b3=Button(window, text="Konec", width = 10, command=self.window.destroy)
-        b3.grid(row=20, column=2)
+        b3.grid(row=23, column=2)
+
+        b4=Button(window, text="Vytvor", width = 5, command=self.createDir)
+        b4.grid(row=20, column=4)
+
+    def createDir(self):
+        self.path = self.projPath_value.get() 
+        backend.Folder().createWrkDir(self.path)
 
 window=Tk()
 Window(window)
