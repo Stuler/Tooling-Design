@@ -175,14 +175,24 @@ class Window():
         self.projPath_value = StringVar()
         self.projPath = Entry(window,textvariable=self.projPath_value, width=40)
         self.projPath.grid(row=20, column=1, columnspan=3)
+        
+        b4=Button(window, text="Vytvor", width = 5, command=self.createDir)
+        b4.grid(row=20, column=4)
 
         # Oznacenie naradia
         oznNar = Label(window, text = "Oznacenie naradia:")
         oznNar.grid(row=21, column=0)
 
         self.oznNar_value = StringVar()
-        self.oznNar = Entry(window,textvariable=self.oznNar_value, width=40)
-        self.oznNar.grid(row=21, column=1, columnspan=3)
+        self.oznNar = Entry(window,textvariable=self.oznNar_value, width=34)
+        self.oznNar.grid(row=21, column=1, columnspan=2)
+
+        self.initNo_value = ()
+        self.initNo = Entry(window,textvariable=self.initNo_value, width=5)
+        self.initNo.grid(row=21, column=3)
+
+        b5=Button(window, text="Vytvor", width = 5)
+        b5.grid(row=21, column=4)
 
         # Tlacitka
         b1=Button(window, text="OK",  width = 10)
@@ -193,9 +203,6 @@ class Window():
 
         b3=Button(window, text="Konec", width = 10, command=self.window.destroy)
         b3.grid(row=23, column=2)
-
-        b4=Button(window, text="Vytvor", width = 5, command=self.createDir)
-        b4.grid(row=20, column=4)
 
     def createDir(self):
         self.path = self.projPath_value.get() 

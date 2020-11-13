@@ -1,8 +1,7 @@
-# Vytvori podadresare projektu
 from os import makedirs
 
 class Folder:
-
+    '''Creates main directory and all the subdirectories'''
     def __init__(self):
         self.toolsList = [
             "Stahovaci krouzky", 
