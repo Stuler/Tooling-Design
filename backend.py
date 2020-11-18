@@ -19,3 +19,4 @@ class Folder:
         for i in self.toolsList:
             makedirs(self.path + "\\" + i)
         # ! Zapracovat algoritmus pre uz existujuci priecinok
+

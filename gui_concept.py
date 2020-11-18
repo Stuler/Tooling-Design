@@ -133,6 +133,9 @@ class Window():
         ram6 = Label(window, text = "Vule chytáku")
         ram6.grid(row=17, column=1)
 
+        ram7 = Label(window, text = "Tvar ramene")
+        ram7.grid(row=20, column=1)
+
         self.prumRam_value = DoubleVar()
         self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
         self.prumRam.grid(row=14, column=2)
@@ -153,6 +156,10 @@ class Window():
         self.vuleChyt = Entry(window,textvariable=self.vuleChyt_value, width=5)
         self.vuleChyt.grid(row=17, column=2)
 
+        self.tvarRam_value = StringVar()
+        self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
+        self.tvarRam.grid(row=20, column=2)
+
         jedn11 = Label(window, text = "mm")
         jedn11.grid(row=14, column=3)
 
@@ -168,31 +175,34 @@ class Window():
         jedn15 = Label(window, text = "mm")
         jedn15.grid(row=17, column=3)
 
+        jedn16 = Label(window, text = "-")
+        jedn16.grid(row=20, column=3)
+
         # Cesta projektu
         projectPath = Label(window, text = "Cesta projektu:")
-        projectPath.grid(row=20, column=0)
+        projectPath.grid(row=21, column=0)
 
         self.projPath_value = StringVar()
         self.projPath = Entry(window,textvariable=self.projPath_value, width=40)
-        self.projPath.grid(row=20, column=1, columnspan=3)
+        self.projPath.grid(row=21, column=1, columnspan=3)
         
         b4=Button(window, text="Vytvor", width = 5, command=self.createDir)
-        b4.grid(row=20, column=4)
+        b4.grid(row=21, column=4)
 
         # Oznacenie naradia
         oznNar = Label(window, text = "Oznacenie naradia:")
-        oznNar.grid(row=21, column=0)
+        oznNar.grid(row=22, column=0)
 
         self.oznNar_value = StringVar()
         self.oznNar = Entry(window,textvariable=self.oznNar_value, width=34)
-        self.oznNar.grid(row=21, column=1, columnspan=2)
+        self.oznNar.grid(row=22, column=1, columnspan=2)
 
-        self.initNo_value = ()
+        self.initNo_value = StringVar()
         self.initNo = Entry(window,textvariable=self.initNo_value, width=5)
-        self.initNo.grid(row=21, column=3)
+        self.initNo.grid(row=22, column=3)
 
-        b5=Button(window, text="Vytvor", width = 5)
-        b5.grid(row=21, column=4)
+        b5=Button(window, text="Vytvor", width = 5,command=self.set_numbering)
+        b5.grid(row=22, column=4)
 
         # Tlacitka
         b1=Button(window, text="OK",  width = 10)
@@ -204,9 +214,22 @@ class Window():
         b3=Button(window, text="Konec", width = 10, command=self.window.destroy)
         b3.grid(row=23, column=2)
 
+# FUNCTIONS
     def createDir(self):
         self.path = self.projPath_value.get() 
         backend.Folder().createWrkDir(self.path)
+    
+    def get_numbering(self):
+        self.d_nad = self.prumNad_value.get()
+        self.h_nad = self.vysNad_value.get()
+        self.tlak = self.tlak_value.get()
+        self.tvar_ramena = self.tvarRam_value.get()
+        self.poc_cislo = self.initNo_value.get()
+        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-{self.poc_cislo}")
+
+    def set_numbering(self):
+        self.oznNar.insert(END,self.get_numbering())
+
 
 window=Tk()
 Window(window)
