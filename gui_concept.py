@@ -6,40 +6,6 @@ class Window():
         self.window = window
         self.window.wm_title("Návrh nářadí")
 
-        # Dutinka
-        dut1 = Label(window, text = "Dutinka")
-        dut1.grid(row=0, column=0)
-
-        dut2 = Label(window, text = "Průměr dutinky")
-        dut2.grid(row=1, column=1)
-
-        dut3 = Label(window, text = "Tloušťka dutinky")
-        dut3.grid(row=2, column=1)
-
-        dut4 = Label(window, text = "Výška dutinky")
-        dut4.grid(row=3, column=1)
-
-        self.prumDut_value = DoubleVar()
-        self.prumDut = Entry(window,textvariable=self.prumDut_value, width=5)
-        self.prumDut.grid(row=1, column=2)
-
-        self.tlDut_value = DoubleVar()
-        self.tlDut = Entry(window,textvariable=self.tlDut_value, width=5)
-        self.tlDut.grid(row=2, column=2)
-
-        self.vysDut_value = IntVar()
-        self.vysDut = Entry(window,textvariable=self.vysDut_value, width=5)
-        self.vysDut.grid(row=3, column=2)
-
-        jedn1 = Label(window, text = "mm")
-        jedn1.grid(row=1, column=3)
-
-        jedn2 = Label(window, text = "mm")
-        jedn2.grid(row=2, column=3)
-
-        jedn3 = Label(window, text = "mm")
-        jedn3.grid(row=3, column=3)
-
         # Nadobka
         nad1 = Label(window, text = "Nádobka")
         nad1.grid(row=4, column=0)
@@ -225,7 +191,7 @@ class Window():
         self.tlak = self.tlak_value.get()
         self.tvar_ramena = self.tvarRam_value.get()
         self.poc_cislo = self.initNo_value.get()
-        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-{self.poc_cislo}")
+        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}{self.poc_cislo}")
 
     def set_numbering(self):
         self.oznNar.insert(END,self.get_numbering())
