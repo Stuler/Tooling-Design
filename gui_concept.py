@@ -103,11 +103,11 @@ class Window():
         ram7.grid(row=14, column=1)
 
         self.prumRam_value = DoubleVar()
-        self.prumRam = Entry(window,textvariable=self.prumNad_value, width=5)
+        self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
         self.prumRam.grid(row=9, column=2)
 
         self.tlRam_value = DoubleVar()
-        self.tlRam = Entry(window,textvariable=self.tlKom_value, width=5)
+        self.tlRam = Entry(window,textvariable=self.tlRam_value, width=5)
         self.tlRam.grid(row=10, column=2)
 
         self.vuleChyt_value = DoubleVar(value=0.03)
@@ -194,6 +194,7 @@ class Window():
         return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}{self.poc_cislo}")
 
     def set_numbering(self):
+        self.oznNar.delete(0,END)
         self.oznNar.insert(END,self.get_numbering())
 
 window=Tk()
