@@ -20,3 +20,5 @@ class Folder:
             makedirs(self.path + "\\" + i)
         # ! Zapracovat algoritmus pre uz existujuci priecinok
 
+
+

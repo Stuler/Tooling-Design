@@ -177,7 +177,7 @@ class Window():
         b5.grid(row=22, column=4)
 
         # Tlacitka
-        b1=Button(window, text="OK",  width = 10)
+        b1=Button(window, text="OK",  width = 10, command=self.get_tool_lst)
         b1.grid(row=23, column=0)
 
         b2=Button(window, text="Reset", width = 10)
@@ -202,6 +202,28 @@ class Window():
         self.oznNar.delete(0,END)
         self.oznNar.insert(END,self.get_numbering())
 
+    def get_tool_lst(self, tools=[]):
+        self.toolsList = ["Stahovaci krouzky", 
+                        "Chytaky", 
+                        "Vodici pouzdra", 
+                        "Navadeci krouzky", 
+                        "Drzaky chytaku",
+                        "Sroubove cepy",
+                        "Trny",
+                        "Pruziny"]
+                    
+        self.checkedTools = [self.stKr.get(),
+                            self.chytaky.get(),
+                            self.vodPzdra.get(),
+                            self.navKr.get(),
+                            self.drzChyt.get(),
+                            self.sroubCepy.get(),
+                            self.trny.get(),
+                            self.pruziny.get()]
+        self.toolsRsm = list(zip(self.toolsList, self.checkedTools))
+        self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
+        print (self.designedTools) 
+        
 window=Tk()
 Window(window)
 window.mainloop()

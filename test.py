@@ -1,24 +1,15 @@
-from openpyxl import Workbook
-from openpyxl.utils import get_column_letter
+lst1=["Stahovaci krouzky", 
+    "Chytaky", 
+    "Vodici pouzdra", 
+    "Navadeci krouzky", 
+    "Drzaky chytaku",
+    "Sroubove cepy",
+    "Trny",
+    "Pruziny"]
 
-wb = Workbook()
+lst2=[0,0,1,0,0,1,1,0]
 
-dest_filename = 'C:\\Python\\empty_book.xlsx'
+zippedLst = list(zip(lst1,lst2))
 
-ws1 = wb.active
-ws1.title = "range names"
-
-for row in range(1, 40):
-    ws1.append(range(600))
-
-ws2 = wb.create_sheet(title="Pi")
-
-ws2['F5'] = 3.14
-
-ws3 = wb.create_sheet(title="Data")
-for row in range(10, 20):
-    for col in range(27, 54):
-        _ = ws3.cell(column=col, row=row, value="{0}".format(get_column_letter(col)))
-print(ws3['AA10'].value)
-
-wb.save(filename = dest_filename)
+validLst = [i[0] for i in zippedLst if i[1]==1]
+print(validLst)
