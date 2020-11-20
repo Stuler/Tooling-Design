@@ -7,29 +7,14 @@ class Window():
         self.window.wm_title("Návrh nářadí")
 
         # Nadobka
-        nad1 = Label(window, text = "Nádobka")
-        nad1.grid(row=0, column=0, sticky=W)
-
-        nad2 = Label(window, text = "Průměr nádobky")
-        nad2.grid(row=1, column=1, sticky=W)
-
-        nad3 = Label(window, text = "Výška nádobky")
-        nad3.grid(row=2, column=1, sticky=W)
-
-        nad4 = Label(window, text = "Tloušťka komínku")
-        nad4.grid(row=3, column=1, sticky=W)
-
-        nad5 = Label(window, text = "Tloušťka vnitřního laku")
-        nad5.grid(row=4, column=1, sticky=W)
-
-        nad6 = Label(window, text = "Tloušťka vnějšího laku")
-        nad6.grid(row=5, column=1, sticky=W)
-
-        nad7 = Label(window, text = "Průměr komínku")
-        nad7.grid(row=6, column=1, sticky=W)
-
-        nad8 = Label(window, text = "Tlaková specifikace")
-        nad8.grid(row=7, column=1, sticky=W)
+        Label(window, text = "Nádobka").grid(row=0, column=0, sticky=W)
+        Label(window, text = "Průměr nádobky").grid(row=1, column=1, sticky=W)
+        Label(window, text = "Výška nádobky").grid(row=2, column=1, sticky=W)
+        Label(window, text = "Tloušťka komínku").grid(row=3, column=1, sticky=W)
+        Label(window, text = "Tloušťka vnitřního laku").grid(row=4, column=1, sticky=W)
+        Label(window, text = "Tloušťka vnějšího laku").grid(row=5, column=1, sticky=W)
+        Label(window, text = "Průměr komínku").grid(row=6, column=1, sticky=W)
+        Label(window, text = "Tlaková specifikace").grid(row=7, column=1, sticky=W)
 
         self.prumNad_value = IntVar(value=45)
         self.prumNad = Entry(window,textvariable=self.prumNad_value, width=5)
@@ -58,49 +43,24 @@ class Window():
         self.tlak_value = IntVar(value=12)
         self.tlak = Entry(window,textvariable=self.tlak_value, width=5)
         self.tlak.grid(row=7, column=2)
-
-        jedn4 = Label(window, text = "mm")
-        jedn4.grid(row=1, column=3, sticky=W)
-
-        jedn5 = Label(window, text = "mm")
-        jedn5.grid(row=2, column=3, sticky=W)
-
-        jedn6 = Label(window, text = "mm")
-        jedn6.grid(row=3, column=3, sticky=W)
-
-        jedn7 = Label(window, text = "mm")
-        jedn7.grid(row=4, column=3, sticky=W)
-
-        jedn8 = Label(window, text = "mm")
-        jedn8.grid(row=5, column=3, sticky=W)
-
-        jedn9 = Label(window, text = "mm")
-        jedn9.grid(row=6, column=3, sticky=W)
-
-        jedn10 = Label(window, text = "bar")
-        jedn10.grid(row=7, column=3, sticky=W)
+        
+        Label(window, text = "mm").grid(row=1, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=2, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=3, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=4, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=5, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=6, column=3, sticky=W)
+        Label(window, text = "bar").grid(row=7, column=3, sticky=W)
 
         # rameno
-        ram1 = Label(window, text = "Rameno")
-        ram1.grid(row=8, column=0, sticky=W)
+        Label(window, text = "Rameno").grid(row=8, column=0, sticky=W)
 
-        ram2 = Label(window, text = "Průměr ramena")
-        ram2.grid(row=9, column=1, sticky=W)
-
-        ram3 = Label(window, text = "Tloušťka ramena")
-        ram3.grid(row=10, column=1, sticky=W)
-
-        ram6 = Label(window, text = "Vule chytáku")
-        ram6.grid(row=11, column=1, sticky=W)
-
-        ram4 = Label(window, text = "Ůhel ramena")
-        ram4.grid(row=12, column=1, sticky=W)
-
-        ram5 = Label(window, text = "Počet tahu")
-        ram5.grid(row=13, column=1, sticky=W)
-
-        ram7 = Label(window, text = "Tvar ramene")
-        ram7.grid(row=14, column=1, sticky=W)
+        Label(window, text = "Průměr ramena").grid(row=9, column=1, sticky=W)
+        Label(window, text = "Tloušťka ramena").grid(row=10, column=1, sticky=W)
+        Label(window, text = "Vule chytáku").grid(row=11, column=1, sticky=W)
+        Label(window, text = "Ůhel ramena").grid(row=12, column=1, sticky=W)
+        Label(window, text = "Počet tahu").grid(row=13, column=1, sticky=W)
+        Label(window, text = "Tvar ramene").grid(row=14, column=1, sticky=W)
 
         self.prumRam_value = DoubleVar()
         self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
@@ -126,23 +86,12 @@ class Window():
         self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
         self.tvarRam.grid(row=14, column=2)
 
-        jedn11 = Label(window, text = "mm")
-        jedn11.grid(row=9, column=3, sticky=W)
-
-        jedn12 = Label(window, text = "mm")
-        jedn12.grid(row=10, column=3, sticky=W)
-
-        jedn15 = Label(window, text = "mm")
-        jedn15.grid(row=11, column=3, sticky=W)
-
-        jedn13 = Label(window, text = "°")
-        jedn13.grid(row=12, column=3, sticky=W)
-
-        jedn14 = Label(window, text = "-")
-        jedn14.grid(row=13, column=3, sticky=W)
-
-        jedn16 = Label(window, text = "-")
-        jedn16.grid(row=14, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=9, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=10, column=3, sticky=W)
+        Label(window, text = "mm").grid(row=11, column=3, sticky=W)
+        Label(window, text = "°").grid(row=12, column=3, sticky=W)
+        Label(window, text = "-").grid(row=13, column=3, sticky=W)
+        Label(window, text = "-").grid(row=14, column=3, sticky=W)
         
         # Seznam naradi
         Label(window, text = "Seznam nářadí").grid(row=0, column=5, sticky=W)
