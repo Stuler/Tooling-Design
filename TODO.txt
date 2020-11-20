@@ -1,0 +1,7 @@
+1. Zapracovat funkcionalitu pre vytvorenie excelu
+    1.1 Základný excel s premennými parametrami náradia
+    1.2 Porkočilý excel s previazanými bunkami
+
+2. Vylepšenie GUI
+    2.1 Cesta projektu - umožniť interaktívny výber
+    2.2 Štartovacie čísla - nechať vygenerovať

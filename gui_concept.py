@@ -247,8 +247,7 @@ class Window():
         self.h_nad = self.vysNad_value.get()
         self.tlak = self.tlak_value.get()
         self.tvar_ramena = self.tvarRam_value.get()
-        self.poc_cislo = self.initNo_value.get()
-        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-{self.poc_cislo}")
+        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-")
 
     def set_numbering(self):
         self.oznNar.delete(0,END)
