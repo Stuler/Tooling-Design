@@ -1,5 +1,5 @@
+from os import makedirs
 from tkinter import *
-import backend
 
 class Window():
     def __init__(self, window):
@@ -189,7 +189,10 @@ class Window():
 # FUNCTIONS
     def createDir(self):
         self.path = self.projPath_value.get() 
-        backend.Folder().createWrkDir(self.path)
+        self.tools = self.get_tool_lst()
+        for i in self.tools:
+            makedirs(self.path + "\\" + i)
+        # ! Zapracovat algoritmus pre uz existujuci priecinok
     
     def get_numbering(self):
         self.d_nad = self.prumNad_value.get()
@@ -202,7 +205,7 @@ class Window():
         self.oznNar.delete(0,END)
         self.oznNar.insert(END,self.get_numbering())
 
-    def get_tool_lst(self, tools=[]):
+    def get_tool_lst(self):
         self.toolsList = ["Stahovaci krouzky", 
                         "Chytaky", 
                         "Vodici pouzdra", 
@@ -222,7 +225,7 @@ class Window():
                             self.pruziny.get()]
         self.toolsRsm = list(zip(self.toolsList, self.checkedTools))
         self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
-        print (self.designedTools) 
+        return self.designedTools 
         
 window=Tk()
 Window(window)
