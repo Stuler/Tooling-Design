@@ -1,6 +1,10 @@
 from os import makedirs
 from tkinter import *
 
+#TODO: Opytat sa uzivatela na pocet tvarovych kruzkov
+#TODO: Vygenerovat pociatocne cisla jednotlivych typov naradia
+#TODO: REFACTOR!!!
+
 class Window():
     def __init__(self, window):
         self.window = window
@@ -153,6 +157,11 @@ class Window():
         self.pruzinyInitVal = IntVar()
         self.pruzinyInit = Entry(window,textvariable=self.pruzinyInitVal, width=5)
         self.pruzinyInit.grid(row=8, column=6)
+
+        Label(window, text = "Počet tvarových stah. kroužků").grid(row=1, column=7, sticky=W)
+        self.pocTvarKrVal = IntVar()
+        self.pocTvarKr = Entry(window,textvariable=self.pocTvarKrVal, width=2)
+        self.pocTvarKr.grid(row=1, column=8)
 
         # Cesta projektu
         projectPath = Label(window, text = "Cesta projektu:")
