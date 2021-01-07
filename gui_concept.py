@@ -63,7 +63,7 @@ class Window():
         Label(window, text = "Tloušťka ramena").grid(row=10, column=1, sticky=W)
         Label(window, text = "Vule chytáku").grid(row=11, column=1, sticky=W)
         Label(window, text = "Ůhel ramena").grid(row=12, column=1, sticky=W)
-        Label(window, text = "Počet tahu").grid(row=13, column=1, sticky=W)
+        Label(window, text = "Počet tahů").grid(row=13, column=1, sticky=W)
         Label(window, text = "Tvar ramene").grid(row=14, column=1, sticky=W)
 
         self.prumRam_value = DoubleVar()
@@ -130,31 +130,31 @@ class Window():
         self.stKrInit = Entry(window,textvariable=self.stKrInitVal, width=5)
         self.stKrInit.grid(row=1, column=6)
 
-        self.chytakyInitVal = IntVar()
+        self.chytakyInitVal = IntVar(value=201)
         self.chytakyInit = Entry(window,textvariable=self.chytakyInitVal, width=5)
         self.chytakyInit.grid(row=2, column=6)
 
-        self.vodPzdraInitVal = IntVar()
+        self.vodPzdraInitVal = IntVar(value=301)
         self.vodPzdraInit = Entry(window,textvariable=self.vodPzdraInitVal, width=5)
         self.vodPzdraInit.grid(row=3, column=6)
 
-        self.navKrInitVal = IntVar()
+        self.navKrInitVal = IntVar(value=401)
         self.navKrInit = Entry(window,textvariable=self.navKrInitVal, width=5)
         self.navKrInit.grid(row=4, column=6)
 
-        self.drzChytInitVal = IntVar()
+        self.drzChytInitVal = IntVar(value=501)
         self.drzChytInit = Entry(window,textvariable=self.drzChytInitVal, width=5)
         self.drzChytInit.grid(row=5, column=6)
 
-        self.sroubCepyInitVal = IntVar()
+        self.sroubCepyInitVal = IntVar(value=601)
         self.sroubCepyInit = Entry(window,textvariable=self.sroubCepyInitVal, width=5)
         self.sroubCepyInit.grid(row=6, column=6)
 
-        self.trnyInitVal = IntVar()
+        self.trnyInitVal = IntVar(value=701)
         self.trnyInit = Entry(window,textvariable=self.trnyInitVal, width=5)
         self.trnyInit.grid(row=7, column=6)
 
-        self.pruzinyInitVal = IntVar()
+        self.pruzinyInitVal = IntVar(value=801)
         self.pruzinyInit = Entry(window,textvariable=self.pruzinyInitVal, width=5)
         self.pruzinyInit.grid(row=8, column=6)
 
