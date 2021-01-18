@@ -195,6 +195,14 @@ class Window():
         b3=Button(window, text="Konec", width = 10, command=self.window.destroy)
         b3.grid(row=23, column=2)
 
+        # cesta k sablonam
+        sabNar = Label(window, text = "Cesta k šablonám nářadí:")
+        sabNar.grid(row=9, column=5, sticky=W)
+
+        self.sabNar_value = StringVar(value = "M:\R&D projekty\Ostatní\Jurek")
+        self.sabNar = Entry(window,textvariable=self.sabNar_value, width=40)
+        self.sabNar.grid(row=9, column=6, columnspan=3)
+
 # FUNCTIONS
     def createDir(self):
         self.path = self.projPath_value.get() 
