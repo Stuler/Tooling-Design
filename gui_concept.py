@@ -1,9 +1,10 @@
 from os import makedirs
 from tkinter import *
+from openpyxl import Workbook, load_workbook
+from openpyxl.utils import get_column_letter
 
-#TODO: Opytat sa uzivatela na pocet tvarovych kruzkov
-#TODO: Vygenerovat pociatocne cisla jednotlivych typov naradia
 #TODO: REFACTOR!!!
+#TODO: Zaskrtat vsetky naradia
 
 class Window():
     def __init__(self, window):
@@ -66,11 +67,11 @@ class Window():
         Label(window, text = "Počet tahů").grid(row=13, column=1, sticky=W)
         Label(window, text = "Tvar ramene").grid(row=14, column=1, sticky=W)
 
-        self.prumRam_value = DoubleVar()
+        self.prumRam_value = DoubleVar(value=45)
         self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
         self.prumRam.grid(row=9, column=2)
 
-        self.tlRam_value = DoubleVar()
+        self.tlRam_value = DoubleVar(value=0.24)
         self.tlRam = Entry(window,textvariable=self.tlRam_value, width=5)
         self.tlRam.grid(row=10, column=2)
 
@@ -78,15 +79,15 @@ class Window():
         self.vuleChyt = Entry(window,textvariable=self.vuleChyt_value, width=5)
         self.vuleChyt.grid(row=11, column=2)
 
-        self.uhRam_value = DoubleVar()
+        self.uhRam_value = DoubleVar(value=27)
         self.uhRam = Entry(window,textvariable=self.uhRam_value, width=5)
         self.uhRam.grid(row=12, column=2)
 
-        self.pocTah_value = IntVar()
+        self.pocTah_value = IntVar(value=19)
         self.pocTah = Entry(window,textvariable=self.pocTah_value, width=5)
         self.pocTah.grid(row=13, column=2)
 
-        self.tvarRam_value = StringVar()
+        self.tvarRam_value = StringVar(value="Crown")
         self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
         self.tvarRam.grid(row=14, column=2)
 
@@ -167,7 +168,7 @@ class Window():
         projectPath = Label(window, text = "Cesta projektu:")
         projectPath.grid(row=21, column=0, sticky=W)
 
-        self.projPath_value = StringVar()
+        self.projPath_value = StringVar(value= "C:\Python\Test")
         self.projPath = Entry(window,textvariable=self.projPath_value, width=40)
         self.projPath.grid(row=21, column=1, columnspan=3)
         
@@ -186,7 +187,7 @@ class Window():
         b5.grid(row=22, column=4)
 
         # Tlacitka
-        b1=Button(window, text="OK",  width = 10, command=self.get_tool_lst)
+        b1=Button(window, text="OK",  width = 10, command=self.exec)
         b1.grid(row=23, column=0)
 
         b2=Button(window, text="Reset", width = 10)
@@ -209,6 +210,7 @@ class Window():
         self.tools = self.get_tool_lst()
         for i in self.tools:
             makedirs(self.path + "\\" + i)
+
         # ! Zapracovat algoritmus pre uz existujuci priecinok
     
     def get_numbering(self):
@@ -243,6 +245,60 @@ class Window():
         self.toolsRsm = list(zip(self.toolsList, self.checkedTools))
         self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
         return self.designedTools 
+
+    def create_XLS(self):
+        wb = Workbook()
+        dest = self.projPath_value.get() + "\\ navrh_naradi.xlsx"
+        ws1 = wb.active
+        ws1.title = "Data"
+
+        # Prvy stlpec
+        ws1['B2'] = "Stena dutinky"
+        ws1['B3'] = "Stena ramena"
+        ws1['B4'] = "Stena kominku"
+
+        ws1['B6'] = "Pocet tahu"
+        ws1['B7'] = "Redukce"
+
+        ws1['B9'] = "Zmena tloustky steny/tah"
+
+        ws1.merge_cells('B11:B13')
+        ws1['B11'] = "Tloustka laku"
+        ws1['B14'] = "Vule chytaku"
+
+        ws1['B17'] = "Prumer zacatku ramena"
+
+        # Druhy stlpec
+        ws1['C2'] = "tdutinka"
+        ws1['C3'] = "trameno"
+        ws1['C4'] = "tkominek"
+
+        ws1['C6'] = "n"
+        ws1['C7'] = "red"
+
+        ws1['C9'] = "tdut/n"
+
+        ws1['C11'] = "tvonklak"
+        ws1['C12'] = "tvnutlak"
+        ws1['C13'] = "tlakcelk"
+        ws1['C14'] = "v"
+
+        ws1['C16'] = "Dnad"
+        ws1['C17'] = "Dram"
+
+        # Treti stlpec
+        ws1['D2'] = self.tlRam.get()
+        ws1['D3'] = self.tlRam.get()
+        ws1['D4'] = self.tlKom.get()
+
+        ws1['D6'] = self.pocTah.get()
+
+        wb.save(dest)
+
+    def exec(self):
+        self.createDir()
+        self.create_XLS()
+
         
 window=Tk()
 Window(window)
