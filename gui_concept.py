@@ -37,9 +37,9 @@ class Window():
         self.tlIntLak = Entry(window,textvariable=self.tlIntLak_value, width=5)
         self.tlIntLak.grid(row=4, column=2)
 
-        self.tlExtLAk_value = DoubleVar(value=0.02)
-        self.tlExtLAk = Entry(window,textvariable=self.tlExtLAk_value, width=5)
-        self.tlExtLAk.grid(row=5, column=2)
+        self.tlExtLak_value = DoubleVar(value=0.02)
+        self.tlExtLak = Entry(window,textvariable=self.tlExtLak_value, width=5)
+        self.tlExtLak.grid(row=5, column=2)
 
         self.prumKom_value = DoubleVar(value=25.4)
         self.prumKom = Entry(window,textvariable=self.prumKom_value, width=5)
@@ -67,7 +67,7 @@ class Window():
         Label(window, text = "Počet tahů").grid(row=13, column=1, sticky=W)
         Label(window, text = "Tvar ramene").grid(row=14, column=1, sticky=W)
 
-        self.prumRam_value = DoubleVar(value=45)
+        self.prumRam_value = DoubleVar(value=40.23)
         self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
         self.prumRam.grid(row=9, column=2)
 
@@ -124,7 +124,6 @@ class Window():
 
         self.pruziny = IntVar()
         Checkbutton(window, text="Pružiny", variable=self.pruziny).grid(row=8, column=5, sticky=W)
-
         Label(window, text = "Startovací číslo").grid(row=0, column=6, sticky=W)
 
         self.stKrInitVal = IntVar(value=101)
@@ -205,46 +204,6 @@ class Window():
         self.sabNar.grid(row=9, column=6, columnspan=3)
 
 # FUNCTIONS
-    def createDir(self):
-        self.path = self.projPath_value.get() 
-        self.tools = self.get_tool_lst()
-        for i in self.tools:
-            makedirs(self.path + "\\" + i)
-
-        # ! Zapracovat algoritmus pre uz existujuci priecinok
-    
-    def get_numbering(self):
-        self.d_nad = self.prumNad_value.get()
-        self.h_nad = self.vysNad_value.get()
-        self.tlak = self.tlak_value.get()
-        self.tvar_ramena = self.tvarRam_value.get()
-        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-")
-
-    def set_numbering(self):
-        self.oznNar.delete(0,END)
-        self.oznNar.insert(END,self.get_numbering())
-
-    def get_tool_lst(self):
-        self.toolsList = ["Stahovaci krouzky", 
-                        "Chytaky", 
-                        "Vodici pouzdra", 
-                        "Navadeci krouzky", 
-                        "Drzaky chytaku",
-                        "Sroubove cepy",
-                        "Trny",
-                        "Pruziny"]
-                    
-        self.checkedTools = [self.stKr.get(),
-                            self.chytaky.get(),
-                            self.vodPzdra.get(),
-                            self.navKr.get(),
-                            self.drzChyt.get(),
-                            self.sroubCepy.get(),
-                            self.trny.get(),
-                            self.pruziny.get()]
-        self.toolsRsm = list(zip(self.toolsList, self.checkedTools))
-        self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
-        return self.designedTools 
 
     def create_XLS(self):
         wb = Workbook()
@@ -292,8 +251,63 @@ class Window():
         ws1['D4'] = self.tlKom.get()
 
         ws1['D6'] = self.pocTah.get()
+        ws1['D7'] = round(self.getReduction() * 100, 2)
+
+
 
         wb.save(dest)
+
+    def getReduction(self):
+        self.celkLak = float(self.tlIntLak.get()) + float(self.tlExtLak.get())
+        self.koncPr = float(self.prumKom.get()) + 2*float(self.tlKom.get()) + 2*(self.celkLak)
+        self.rozdilPrum = float(self.prumRam.get()) - self.koncPr
+        self.redTah = self.rozdilPrum / int(self.pocTah.get())
+        self.relRed = self.redTah / float(self.prumRam.get())
+        return self.relRed
+
+    def getStrokeRed(self):
+        pass
+        
+    def createDir(self):
+        self.path = self.projPath_value.get() 
+        self.tools = self.get_tool_lst()
+        for i in self.tools:
+            makedirs(self.path + "\\" + i)
+
+        # ! Zapracovat algoritmus pre uz existujuci priecinok
+    
+    def get_numbering(self):
+        self.d_nad = self.prumNad_value.get()
+        self.h_nad = self.vysNad_value.get()
+        self.tlak = self.tlak_value.get()
+        self.tvar_ramena = self.tvarRam_value.get()
+        return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-")
+
+    def set_numbering(self):
+        self.oznNar.delete(0,END)
+        self.oznNar.insert(END,self.get_numbering())
+
+    def get_tool_lst(self):
+        self.toolsList = ["Stahovaci krouzky", 
+                        "Chytaky", 
+                        "Vodici pouzdra", 
+                        "Navadeci krouzky", 
+                        "Drzaky chytaku",
+                        "Sroubove cepy",
+                        "Trny",
+                        "Pruziny"]
+                    
+        self.checkedTools = [self.stKr.get(),
+                            self.chytaky.get(),
+                            self.vodPzdra.get(),
+                            self.navKr.get(),
+                            self.drzChyt.get(),
+                            self.sroubCepy.get(),
+                            self.trny.get(),
+                            self.pruziny.get()]
+        self.toolsRsm = list(zip(self.toolsList, self.checkedTools))
+        self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
+        return self.designedTools 
 
     def exec(self):
         self.createDir()
