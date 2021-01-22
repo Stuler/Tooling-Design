@@ -286,22 +286,23 @@ class Window():
         ws1['E16'] = "mm"
         ws1['E17'] = "mm"      
         ws1['E18'] = "mm"   
+        
+        # Rozmery naradi
+        ws2 = wb.create_sheet(title="Rozmery naradi")
+        ws2['A2'] = "Stahovací kroužky"
+        rows_st_krouzky = [
+                    ["Tah", "Oznaceni", "Ds", "Dc", "Rc", "R", "Lc", "XRc"]
+                        ]
+        for row in rows_st_krouzky:
+            ws2.append(row)
+
+        initial_coord = ws2['D4']
+
+
+        ws2['D4'] = "=Data!D17*(1-DATA!D7)"
 
         wb.save(dest)
-
-    def getReduction(self):
-        self.celkLak = float(self.tlIntLak.get()) + float(self.tlExtLak.get())
-        self.koncPr = float(self.prumKom.get()) + 2*float(self.tlKom.get()) + 2*(self.celkLak)
-        self.rozdilPrum = float(self.prumRam.get()) - self.koncPr
-        self.redTah = self.rozdilPrum / int(self.pocTah.get())
-        self.relRed = self.redTah / float(self.prumRam.get())
-        return self.relRed
-
-    def getStrokeRed(self):
-        self.rozdTl = float(self.tlKom.get()) - float(self.tlRam.get())
-        self.relRozdTl = round(self.rozdTl / int(self.pocTah.get()),3)
-        return self.relRozdTl
-        
+    
     def createDir(self):
         self.path = self.projPath_value.get() 
         self.tools = self.get_tool_lst()
