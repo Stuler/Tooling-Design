@@ -225,35 +225,67 @@ class Window():
         ws1['B11'] = "Tloustka laku"
         ws1['B14'] = "Vule chytaku"
 
+        ws1['B16'] = "Prumer nadobky"
         ws1['B17'] = "Prumer zacatku ramena"
+        ws1['B18'] = "Prumer kominku"
+
 
         # Druhy stlpec
-        ws1['C2'] = "tdutinka"
-        ws1['C3'] = "trameno"
-        ws1['C4'] = "tkominek"
+        ws1['C2'] = "t_dut"
+        ws1['C3'] = "t_ram"
+        ws1['C4'] = "t_kom"
 
         ws1['C6'] = "n"
         ws1['C7'] = "red"
 
-        ws1['C9'] = "tdut/n"
+        ws1['C9'] = "t_dut/n"
 
-        ws1['C11'] = "tvonklak"
-        ws1['C12'] = "tvnutlak"
-        ws1['C13'] = "tlakcelk"
+        ws1['C11'] = "t_vonklak"
+        ws1['C12'] = "t_vnutlak"
+        ws1['C13'] = "t_lakcelk"
         ws1['C14'] = "v"
 
-        ws1['C16'] = "Dnad"
-        ws1['C17'] = "Dram"
+        ws1['C16'] = "D_nad"
+        ws1['C17'] = "D_ram"
+        ws1['C18'] = "D_kom"
 
         # Treti stlpec
-        ws1['D2'] = self.tlRam.get()
-        ws1['D3'] = self.tlRam.get()
-        ws1['D4'] = self.tlKom.get()
+        ws1['D2'] = float(self.tlRam.get())
+        ws1['D3'] = float(self.tlRam.get())
+        ws1['D4'] = float(self.tlKom.get())
 
-        ws1['D6'] = self.pocTah.get()
-        ws1['D7'] = round(self.getReduction() * 100, 2)
+        ws1['D6'] = int(self.pocTah.get())
+        ws1['D7'] = "=(((D17-(D18+2*D4+2*D13))/D6)/D17)*100"
 
+        ws1['D9'] = "=((D4-D3)/D6)"
 
+        ws1['D11'] = float(self.tlIntLak.get())
+        ws1['D12'] = float(self.tlExtLak.get())  
+        ws1['D13'] = "=D11+D12"
+        ws1['D14'] = float(self.vuleChyt.get())
+
+        ws1['D16'] = float(self.prumNad.get())
+        ws1['D17'] = float(self.prumRam.get())
+        ws1['D18'] = float(self.prumKom.get())
+
+        # Stvrty stlpec
+        ws1['E2'] = "mm"
+        ws1['E3'] = "mm"
+        ws1['E4'] = "mm"
+
+        ws1['E6'] = "-"
+        ws1['E7'] = "%"
+
+        ws1['E9'] = "mm/tah"
+
+        ws1['E11'] = "mm"
+        ws1['E12'] = "mm"  
+        ws1['E13'] = "mm"
+        ws1['E14'] = "mm"
+
+        ws1['E16'] = "mm"
+        ws1['E17'] = "mm"      
+        ws1['E18'] = "mm"   
 
         wb.save(dest)
 
@@ -266,14 +298,15 @@ class Window():
         return self.relRed
 
     def getStrokeRed(self):
-        pass
+        self.rozdTl = float(self.tlKom.get()) - float(self.tlRam.get())
+        self.relRozdTl = round(self.rozdTl / int(self.pocTah.get()),3)
+        return self.relRozdTl
         
     def createDir(self):
         self.path = self.projPath_value.get() 
         self.tools = self.get_tool_lst()
         for i in self.tools:
             makedirs(self.path + "\\" + i)
-
         # ! Zapracovat algoritmus pre uz existujuci priecinok
     
     def get_numbering(self):
