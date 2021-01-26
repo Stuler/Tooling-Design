@@ -5,6 +5,7 @@ from openpyxl.utils import get_column_letter
 
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
+#TODO: Vzorec pre redukciu
 
 class Window():
     def __init__(self, window):
@@ -158,10 +159,15 @@ class Window():
         self.pruzinyInit = Entry(window,textvariable=self.pruzinyInitVal, width=5)
         self.pruzinyInit.grid(row=8, column=6)
 
-        Label(window, text = "Počet tvarových stah. kroužků").grid(row=1, column=7, sticky=W)
-        self.pocTvarKrVal = IntVar()
+        Label(window, text = "Číslo prvního tahu").grid(row=1, column=7, sticky=W)
+        self.prvniTahVal = IntVar(value=1)
+        self.prvniTah = Entry(window,textvariable=self.prvniTahVal, width=2)
+        self.prvniTah.grid(row=1, column=8)
+
+        Label(window, text = "Počet tvarových stah. kroužků").grid(row=2, column=7, sticky=W)
+        self.pocTvarKrVal = IntVar(value=2)
         self.pocTvarKr = Entry(window,textvariable=self.pocTvarKrVal, width=2)
-        self.pocTvarKr.grid(row=1, column=8)
+        self.pocTvarKr.grid(row=2, column=8)
 
         # Cesta projektu
         projectPath = Label(window, text = "Cesta projektu:")
@@ -255,7 +261,7 @@ class Window():
         ws1['D4'] = float(self.tlKom.get())
 
         ws1['D6'] = int(self.pocTah.get())
-        ws1['D7'] = "=(((D17-(D18+2*D4+2*D13))/D6)/D17)"
+        ws1['D7'] = "=(((D17-(D18+2*D4+2*D13))/(D6))/((D17+D18)/2))"
 
         ws1['D9'] = "=((D4-D3)/D6)"
 
@@ -296,12 +302,18 @@ class Window():
         for row in rows_st_krouzky:
             ws2.append(row)
 
+        # Vyplneni tahu
+        ws2['A4'] = int(self.prvniTah.get())
+        for i in range(5, 5+int(self.pocTah.get())-1):
+            ws2['A'+str(i)] ='=A'+str(i-1)+'+1'
+
         # Vypocet Dc
         ws2['D4'] = "=Data!D17*(1-DATA!D7)"
-        for i in range(5, 5+int(self.pocTah.get())):
+        for i in range(5, 5+int(self.pocTah.get())-1):
             ws2['D'+ str(i)] = '=D'+str(i-1)+'*(1-DATA!D7)'
 
-
+        # Vyplneni oznaceni
+        ws2['B4'] = self.oznNar.get() + self.stKrInit.get()
 
         wb.save(dest)
     
