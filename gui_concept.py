@@ -255,7 +255,7 @@ class Window():
         ws1['D4'] = float(self.tlKom.get())
 
         ws1['D6'] = int(self.pocTah.get())
-        ws1['D7'] = "=(((D17-(D18+2*D4+2*D13))/D6)/D17)*100"
+        ws1['D7'] = "=(((D17-(D18+2*D4+2*D13))/D6)/D17)"
 
         ws1['D9'] = "=((D4-D3)/D6)"
 
@@ -296,10 +296,12 @@ class Window():
         for row in rows_st_krouzky:
             ws2.append(row)
 
-        initial_coord = ws2['D4']
-
-
+        # Vypocet Dc
         ws2['D4'] = "=Data!D17*(1-DATA!D7)"
+        for i in range(5, 5+int(self.pocTah.get())):
+            ws2['D'+ str(i)] = '=D'+str(i-1)+'*(1-DATA!D7)'
+
+
 
         wb.save(dest)
     
