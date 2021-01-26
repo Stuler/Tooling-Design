@@ -307,13 +307,18 @@ class Window():
         for i in range(5, 5+int(self.pocTah.get())-1):
             ws2['A'+str(i)] ='=A'+str(i-1)+'+1'
 
+        # Vyplneni oznaceni
+        ws2['B4'] = self.oznNar.get() + self.stKrInit.get()
+        for i in range(5, 5+int(self.pocTah.get())-1):
+            koncCis = int(ws2['B'+ str(i-1)].value[-3:])
+            ws2['B'+ str(i)] = self.oznNar.get() + str(koncCis+1)
+
         # Vypocet Dc
         ws2['D4'] = "=Data!D17*(1-DATA!D7)"
         for i in range(5, 5+int(self.pocTah.get())-1):
             ws2['D'+ str(i)] = '=D'+str(i-1)+'*(1-DATA!D7)'
 
-        # Vyplneni oznaceni
-        ws2['B4'] = self.oznNar.get() + self.stKrInit.get()
+
 
         wb.save(dest)
     
