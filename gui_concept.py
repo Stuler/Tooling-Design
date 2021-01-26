@@ -295,6 +295,8 @@ class Window():
         
         # Rozmery naradi
         ws2 = wb.create_sheet(title="Rozmery naradi")
+
+        # Stahovaci krouzky
         ws2['A2'] = "Stahovací kroužky"
         rows_st_krouzky = [
                     ["Tah", "Oznaceni", "Ds", "Dc", "Rc", "R", "Lc", "XRc"]
@@ -318,6 +320,9 @@ class Window():
         for i in range(5, 5+int(self.pocTah.get())-1):
             ws2['D'+ str(i)] = '=D'+str(i-1)+'*(1-DATA!D7)'
 
+        # Vypocet Ds
+        for i in range(4, 4+int(self.pocTah.get())):
+            ws2['C'+str(i)] = '=D'+str(i)+'+0.15'
 
 
         wb.save(dest)
