@@ -2,7 +2,7 @@ from os import makedirs
 from tkinter import *
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font, alignment
+from openpyxl.styles import numbers
 
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
@@ -278,13 +278,16 @@ class Window():
         ws1['D17'] = float(self.prumRam.get())
         ws1['D18'] = float(self.prumKom.get())
 
+        ws1['D7'].number_format = '0.00 %'
+        ws1['D9'].number_format = '0.000'
+
         # Stvrty stlpec
         ws1['E2'] = "mm"
         ws1['E3'] = "mm"
         ws1['E4'] = "mm"
 
         ws1['E6'] = "-"
-        ws1['E7'] = "%"
+        ws1['E7'] = "-"
 
         ws1['E9'] = "mm/tah"
 
@@ -323,10 +326,13 @@ class Window():
         ws2['D4'] = "=Data!D17*(1-DATA!D7)"
         for i in range(5, 5+int(self.pocTah.get())-1):
             ws2['D'+ str(i)] = '=D'+str(i-1)+'*(1-DATA!D7)'
+        for i in range(4, 5+int(self.pocTah.get())-1):
+            ws2['D'+ str(i)].number_format = '0.00'
 
         # Vypocet Ds
         for i in range(4, 4+int(self.pocTah.get())):
             ws2['C'+str(i)] = '=D'+str(i)+'+0.15'
+            ws2['C'+ str(i)].number_format = '0.00'
 
 
         wb.save(dest)
