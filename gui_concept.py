@@ -300,9 +300,6 @@ class Window():
         ws1['E17'] = "mm"      
         ws1['E18'] = "mm"   
         
-        # Rozmery naradi
-
-
         # Stahovaci krouzky
         ws2['A2'] = "Stahovací kroužky"
         rows_st_krouzky = [
@@ -334,6 +331,21 @@ class Window():
             ws2['C'+str(i)] = '=D'+str(i)+'+0.15'
             ws2['C'+ str(i)].number_format = '0.00'
 
+        # Chytaky
+        pilotsRowsOffset = 4+int(self.pocTah.get())+1
+
+        ws2['A'+str(pilotsRowsOffset)] = "Chytáky"
+        rows_st_krouzky = [
+                    ["Tah", "Oznaceni", "D", "d"]
+                        ]
+        for row in rows_st_krouzky:
+            ws2.append(row)
+
+        # Vyplneni tahu
+        ws2['A'+str((pilotsRowsOffset)+2)] = int(self.prvniTah.get())
+        for i in range(pilotsRowsOffset+3, pilotsRowsOffset+3+int(self.pocTah.get())-1):
+            ws2['A'+str(i)] ='=A'+str(i-1)+'+1'       
+        
 
         wb.save(dest)
     
