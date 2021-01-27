@@ -2,6 +2,7 @@ from os import makedirs
 from tkinter import *
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
+from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font, alignment
 
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
@@ -216,6 +217,9 @@ class Window():
         dest = self.projPath_value.get() + "\\ navrh_naradi.xlsx"
         ws1 = wb.active
         ws1.title = "Data"
+        ws2 = wb.create_sheet(title="Rozmery naradi")
+        ws1.column_dimensions["B"].width = 25.0
+        ws2.column_dimensions["B"].width = 25.0
 
         # Prvy stlpec
         ws1['B2'] = "Stena dutinky"
@@ -294,7 +298,7 @@ class Window():
         ws1['E18'] = "mm"   
         
         # Rozmery naradi
-        ws2 = wb.create_sheet(title="Rozmery naradi")
+
 
         # Stahovaci krouzky
         ws2['A2'] = "Stahovací kroužky"

@@ -4,6 +4,7 @@ import openpyxl
 from openpyxl import Workbook, load_workbook
 import openpyxl.utils
 import openpyxl.cell.cell
+from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font, alignment
 
 '''lst1=["Stahovaci krouzky", 
     "Chytaky", 
@@ -59,6 +60,7 @@ maxCell = cellRange
 col = openpyxl.cell.cell.get_column_letter(4)
 ws1[''+ str(col) + str(minCell)] = "4"
 
+alignment = Alignment(shrink_to_fit=True)
 
     
 
