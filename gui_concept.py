@@ -279,7 +279,7 @@ class Window():
         ws1['D18'] = float(self.prumKom.get())
 
         ws1['D7'].number_format = '0.00 %'
-        ws1['D9'].number_format = '0.000'
+        ws1['D9'].number_format = '0.0000'
 
         # Stvrty stlpec
         ws1['E2'] = "mm"
@@ -332,9 +332,12 @@ class Window():
             ws2['C'+ str(i)].number_format = '0.00'
 
         # Chytaky
-        pilotsRowsOffset = 4+int(self.pocTah.get())+1
+        pilotsOffset = 4+int(self.pocTah.get())+1
+        pilotsLabelRow = pilotsOffset + 1
+        pilotsAutoFunctRow = pilotsOffset + 2
+        pilotsFunctRow = pilotsOffset + 3
 
-        ws2['A'+str(pilotsRowsOffset)] = "Chytáky"
+        ws2['A'+str(pilotsOffset)] = "Chytáky"
         rows_st_krouzky = [
                     ["Tah", "Oznaceni", "D", "d"]
                         ]
@@ -342,10 +345,29 @@ class Window():
             ws2.append(row)
 
         # Vyplneni tahu
-        ws2['A'+str((pilotsRowsOffset)+2)] = int(self.prvniTah.get())
-        for i in range(pilotsRowsOffset+3, pilotsRowsOffset+3+int(self.pocTah.get())-1):
-            ws2['A'+str(i)] ='=A'+str(i-1)+'+1'       
+        ws2['A'+str(pilotsAutoFunctRow)] = int(self.prvniTah.get())
+        for i in range(pilotsFunctRow, pilotsFunctRow+int(self.pocTah.get())-1):
+            ws2['A'+str(i)] ='=A'+str(i-1)+'+1'
+
+        # Vyplneni oznaceni
+        ws2['B'+str(pilotsAutoFunctRow)] = self.oznNar.get() + self.chytakyInit.get()
+        for i in range(pilotsFunctRow, pilotsFunctRow+int(self.pocTah.get())-1):
+            koncCis = int(ws2['B'+ str(i-1)].value[-3:])
+            ws2['B'+ str(i)] = self.oznNar.get() + str(koncCis+1)       
         
+        # Vypocet D
+        strokeLst = []
+        refLst = []
+        for i in range(int(self.pocTah.get())):
+            strokeLst.append(i+1)
+        for i in strokeLst:
+            ws2['C'+str(i+pilotsLabelRow)] = "=D"+str(i+3)+"-2*DATA!$D$13-2*DATA!$D$14-2*(Data!$D$2+"+str(i)+"*Data!$D$9)"
+            ws2['C'+str(i+pilotsLabelRow)].number_format = '0.00'
+
+        # Vypocet D
+        for i in range(pilotsAutoFunctRow, pilotsAutoFunctRow+int(self.pocTah.get())):
+            ws2['D'+str(i)] = '=C'+str(i)+'-5.5'
+            ws2['D'+ str(i)].number_format = '0'
 
         wb.save(dest)
     
