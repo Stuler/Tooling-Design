@@ -5,6 +5,8 @@ from openpyxl import Workbook, load_workbook
 import openpyxl.utils
 import openpyxl.cell.cell
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font, alignment
+from shutil import copytree
+from os import walk
 
 '''lst1=["Stahovaci krouzky", 
     "Chytaky", 
@@ -28,7 +30,7 @@ def createDir():
     mkdir(path + "\\")
     return path
 
-print(createDir())'''
+print(createDir())
 
 wb = Workbook()
 ws1 = wb.active
@@ -44,14 +46,14 @@ ws1.append(cells2)
 
 ws1['A4'] = 2
 
-'''cellX = ws1['A4'].offset(row=19, column=0)
-cellX.value = "4"'''
+cellX = ws1['A4'].offset(row=19, column=0)
+cellX.value = "4"
 
-'''colLet = openpyxl.utils.cell.get_column_letter(4)
-print(colLet)'''
+colLet = openpyxl.utils.cell.get_column_letter(4)
+print(colLet)
 
-'''ranBound = openpyxl.utils.cell.range_boundaries("D4:D20")
-print(ranBound)'''
+ranBound = openpyxl.utils.cell.range_boundaries("D4:D20")
+print(ranBound)
 
 cellRange = 4 + 19
 minCell = 4
@@ -61,8 +63,17 @@ col = openpyxl.cell.cell.get_column_letter(4)
 ws1[''+ str(col) + str(minCell)] = "4"
 
 alignment = Alignment(shrink_to_fit=True)
+ 
+wb.save('C:\\test.xlsx')'''
 
-    
+src = "M:\\R&D projekty\\Ostatní\\Jurek\\Sablony_naradia"
+dst = "C:\\Python\\Test"
 
+#shutil.copy2(src, dst)
+'''folders = walk(src)
+foldList = []
+for k in folders:
+    foldList.append(k[1])
+print(foldList[0])'''
 
-wb.save('C:\\test.xlsx')
+copytree(src, dst)

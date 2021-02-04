@@ -1,4 +1,5 @@
-from os import makedirs
+from os import makedirs, walk
+from shutil import copy2, copytree
 from tkinter import *
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
@@ -6,7 +7,6 @@ from openpyxl.styles import numbers
 
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
-#TODO: Vzorec pre redukciu
 
 class Window():
     def __init__(self, window):
@@ -61,7 +61,6 @@ class Window():
 
         # rameno
         Label(window, text = "Rameno").grid(row=8, column=0, sticky=W)
-
         Label(window, text = "Průměr ramena").grid(row=9, column=1, sticky=W)
         Label(window, text = "Tloušťka ramena").grid(row=10, column=1, sticky=W)
         Label(window, text = "Vule chytáku").grid(row=11, column=1, sticky=W)
@@ -206,7 +205,7 @@ class Window():
         sabNar = Label(window, text = "Cesta k šablonám nářadí:")
         sabNar.grid(row=9, column=5, sticky=W)
 
-        self.sabNar_value = StringVar(value = "M:\R&D projekty\Ostatní\Jurek")
+        self.sabNar_value = StringVar(value = "M:\R&D projekty\Ostatní\Jurek\Sablony_naradia")
         self.sabNar = Entry(window,textvariable=self.sabNar_value, width=40)
         self.sabNar.grid(row=9, column=6, columnspan=3)
 
@@ -214,7 +213,7 @@ class Window():
 
     def create_XLS(self):
         wb = Workbook()
-        dest = self.projPath_value.get() + "\\ navrh_naradi.xlsx"
+        dest = self.projPath_value.get() + "\\navrh_naradi.xlsx"
         ws1 = wb.active
         ws1.title = "Data"
         ws2 = wb.create_sheet(title="Rozmery naradi")
@@ -373,9 +372,8 @@ class Window():
     
     def createDir(self):
         self.path = self.projPath_value.get() 
-        self.tools = self.get_tool_lst()
-        for i in self.tools:
-            makedirs(self.path + "\\" + i)
+        #elf.tools = self.get_tool_lst()
+        makedirs(self.path)
         # ! Zapracovat algoritmus pre uz existujuci priecinok
     
     def get_numbering(self):
@@ -411,10 +409,20 @@ class Window():
         self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
         return self.designedTools 
 
-    def exec(self):
-        self.createDir()
-        self.create_XLS()
+    def copy_tools(self):
+        self.toolsToCopy = self.get_tool_lst()
+        self.path = self.projPath_value.get()
+        folders = walk(self.sabNar.get())
+        foldLst = []
+        for k in folders:
+            foldLst.append(k[1])
+        for i in self.toolsToCopy:
+            copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i))
 
+    def exec(self):
+        #self.createDir()
+        self.copy_tools()
+        self.create_XLS()
         
 window=Tk()
 Window(window)
