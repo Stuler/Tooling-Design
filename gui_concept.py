@@ -369,6 +369,10 @@ class Window():
             ws2['D'+ str(i)].number_format = '0'
 
         wb.save(dest)
+
+        window=Tk()
+        Window(window)
+        window.mainloop()
     
     def createDir(self):
         self.path = self.projPath_value.get() 
@@ -424,6 +428,3 @@ class Window():
         self.copy_tools()
         self.create_XLS()
         
-window=Tk()
-Window(window)
-window.mainloop()
