@@ -1,4 +1,4 @@
-from os import makedirs, walk
+from os import makedirs, walk, listdir
 from shutil import copy2, copytree
 from tkinter import *
 from openpyxl import Workbook, load_workbook
@@ -369,14 +369,10 @@ class Window():
             ws2['D'+ str(i)].number_format = '0'
 
         wb.save(dest)
-
-        window=Tk()
-        Window(window)
-        window.mainloop()
     
     def createDir(self):
         self.path = self.projPath_value.get() 
-        #elf.tools = self.get_tool_lst()
+        #self.tools = self.get_tool_lst()
         makedirs(self.path)
         # ! Zapracovat algoritmus pre uz existujuci priecinok
     
@@ -413,7 +409,7 @@ class Window():
         self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
         return self.designedTools 
 
-    def copy_tools(self):
+    def copy_templates(self):
         self.toolsToCopy = self.get_tool_lst()
         self.path = self.projPath_value.get()
         folders = walk(self.sabNar.get())
@@ -422,9 +418,20 @@ class Window():
             foldLst.append(k[1])
         for i in self.toolsToCopy:
             copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i))
+        toolsTemp = listdir(self.path+"\\"+str(i))
+        print (toolsTemp)
+
+    
+    def copy_tools(self):
+        self.toolsCount = self.pocTah.get()
+
 
     def exec(self):
         #self.createDir()
-        self.copy_tools()
+        self.copy_templates()
         self.create_XLS()
+        self.copy_tools
         
+window=Tk()
+Window(window)
+window.mainloop()
