@@ -7,6 +7,7 @@ from openpyxl.styles import numbers
 
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
+#TODO: Ukazat v hlavnom okne priemernu redukciu
 
 class Window():
     def __init__(self, window):
@@ -420,11 +421,9 @@ class Window():
             copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i))
         toolsTemp = listdir(self.path+"\\"+str(i))
         print (toolsTemp)
-
     
     def copy_tools(self):
         self.toolsCount = self.pocTah.get()
-
 
     def exec(self):
         #self.createDir()
