@@ -419,17 +419,27 @@ class Window():
             foldLst.append(k[1])
         for i in self.toolsToCopy:
             copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i))
-        toolsTemp = listdir(self.path+"\\"+str(i))
-        print (toolsTemp)
-    
+             
     def copy_tools(self):
-        self.toolsCount = self.pocTah.get()
+        self.toolsCount = self.pocTah.get() #ziskam pocet tahov
+        folders = listdir(self.path)        #ziskam strukturu projektovej zlozky
+        fileList = []   
+        for i in folders:   # iterujem projektovou zlozkou
+            if i in self.toolsToCopy:    # kontrola, ci je zlozka zo sablony
+                files = listdir(self.path + "\\"+str(i))
+                for j in files:
+                    print(j)
+                    # TODO: shutil.copy2
+                # files = listdir(self.path+"\\"+str(i)) 
+                # for i in files:
+                #     fileList.append(i)
+                #     print(fileList)
 
     def exec(self):
         #self.createDir()
         self.copy_templates()
         self.create_XLS()
-        self.copy_tools
+        self.copy_tools()
         
 window=Tk()
 Window(window)
