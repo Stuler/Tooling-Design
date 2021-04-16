@@ -1,4 +1,5 @@
 from os import makedirs, walk, listdir
+import os.path
 from shutil import copy2, copytree
 from tkinter import *
 from openpyxl import Workbook, load_workbook
@@ -410,6 +411,10 @@ class Window():
         self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
         return self.designedTools 
 
+    # Funkcia na vypis suborov v zlozke pre ignore do copytree
+    def ig_f(self, dir, files):
+        return [f for f in files if os.path.isfile(os.path.join(dir,f))]
+
     def copy_templates(self):
         self.toolsToCopy = self.get_tool_lst()
         self.path = self.projPath_value.get()
@@ -418,18 +423,20 @@ class Window():
         for k in folders:
             foldLst.append(k[1])
         for i in self.toolsToCopy:
-            copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i))
+            copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i), ignore=self.ig_f)
              
     def copy_tools(self):
+        
         self.toolsCount = self.pocTah.get() #ziskam pocet tahov
         folders = listdir(self.path)        #ziskam strukturu projektovej zlozky
         fileList = []   
+        self.temPath = self.sabNar.get()
         for i in folders:   # iterujem projektovou zlozkou
             if i in self.toolsToCopy:    # kontrola, ci je zlozka zo sablony
-                files = listdir(self.path + "\\"+str(i))
+                files = listdir(self.temPath + "\\"+str(i))
                 for j in files:
-                    print(j)
-                    # TODO: shutil.copy2
+                    copy2(self.temPath + "\\"+str(i)+"\\"+str(j), self.path + "\\"+str(i)+"\\"+str(j))
+                # print(files)
                 # files = listdir(self.path+"\\"+str(i)) 
                 # for i in files:
                 #     fileList.append(i)
