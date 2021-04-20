@@ -9,6 +9,7 @@ from openpyxl.styles import numbers
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
 #TODO: Ukazat v hlavnom okne priemernu redukciu
+#TODO: Opravit cislovanie podla startovacieho cisla naradia!
 
 class Window():
     def __init__(self, window):
@@ -415,6 +416,18 @@ class Window():
     def ig_f(self, dir, files):
         return [f for f in files if os.path.isfile(os.path.join(dir,f))]
 
+    # Metoda na ziskanie nazvu suboru bez pripony
+    def getFileName(self, file):
+        tempName = file.partition(".")[0]
+        baseName = str(self.get_numbering())
+        fileName = str(baseName.replace(tempName, baseName))
+        return fileName
+
+
+    # Metoda na ziskanie pripony suboru
+    def getExt(self, file):
+        return ("."+file.partition(".")[2])
+
     def copy_templates(self):
         self.toolsToCopy = self.get_tool_lst()
         self.path = self.projPath_value.get()
@@ -426,21 +439,18 @@ class Window():
             copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i), ignore=self.ig_f)
              
     def copy_tools(self):
-        
-        self.toolsCount = self.pocTah.get() #ziskam pocet tahov
+        self.toolsCount = int(self.pocTah.get())+1 #ziskam pocet tahov
         folders = listdir(self.path)        #ziskam strukturu projektovej zlozky
-        fileList = []   
+
         self.temPath = self.sabNar.get()
         for i in folders:   # iterujem projektovou zlozkou
             if i in self.toolsToCopy:    # kontrola, ci je zlozka zo sablony
                 files = listdir(self.temPath + "\\"+str(i))
                 for j in files:
-                    copy2(self.temPath + "\\"+str(i)+"\\"+str(j), self.path + "\\"+str(i)+"\\"+str(j))
-                # print(files)
-                # files = listdir(self.path+"\\"+str(i)) 
-                # for i in files:
-                #     fileList.append(i)
-                #     print(fileList)
+                    for k in range(1, self.toolsCount):
+                        fileName = self.getFileName(str(j))
+                        fileExt = self.getExt(str(j))
+                        copy2(self.temPath + "\\"+str(i)+"\\"+str(j), self.path + "\\"+str(i)+"\\"+fileName+str(k)+fileExt)
 
     def exec(self):
         #self.createDir()

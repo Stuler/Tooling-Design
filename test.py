@@ -76,4 +76,8 @@ for k in folders:
     foldList.append(k[1])
 print(foldList[0])'''
 
-copytree(src, dst)
+# copytree(src, dst)
+
+# str = "copy.ipt"
+# part = str.partition(".")
+# print (part[0])
