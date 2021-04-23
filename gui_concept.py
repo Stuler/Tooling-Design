@@ -130,6 +130,7 @@ class Window():
         Checkbutton(window, text="Pružiny", variable=self.pruziny).grid(row=8, column=5, sticky=W)
         Label(window, text = "Startovací číslo").grid(row=0, column=6, sticky=W)
 
+        # Startovacie cisla
         self.stKrInitVal = IntVar(value=101)
         self.stKrInit = Entry(window,textvariable=self.stKrInitVal, width=5)
         self.stKrInit.grid(row=1, column=6)
@@ -386,6 +387,10 @@ class Window():
         self.tvar_ramena = self.tvarRam_value.get()
         return(f"NA-{self.d_nad}-{self.h_nad}-{self.tlak}-{self.tvar_ramena}-")
 
+    def get_init_val(self):
+        self.toolsToCopy = self.get_tool_lst()
+
+
     def set_numbering(self):
         self.oznNar.delete(0,END)
         self.oznNar.insert(END,self.get_numbering())
@@ -408,8 +413,19 @@ class Window():
                             self.sroubCepy.get(),
                             self.trny.get(),
                             self.pruziny.get()]
-        self.toolsRsm = list(zip(self.toolsList, self.checkedTools))
-        self.designedTools = [tools[0] for tools in self.toolsRsm if tools[1]]
+
+        self.initVals = [self.stKrInitVal.get(),
+                        self.chytakyInitVal.get(),
+                        self.vodPzdraInitVal.get(),
+                        self.navKrInitVal.get(),
+                        self.drzChytInitVal.get(),
+                        self.sroubCepyInitVal.get(),
+                        self.trnyInitVal.get(),
+                        self.pruzinyInitVal.get()]
+                        
+        self.toolsRsm = list(zip(self.toolsList, self.initVals, self.checkedTools))
+        self.designedTools = {tools[0]:tools[1] for tools in self.toolsRsm if tools[2]}
+        #vraciam slovnik napr "chytaky":201
         return self.designedTools 
 
     # Funkcia na vypis suborov v zlozke pre ignore do copytree
@@ -423,26 +439,27 @@ class Window():
         fileName = str(baseName.replace(tempName, baseName))
         return fileName
 
-
     # Metoda na ziskanie pripony suboru
     def getExt(self, file):
         return ("."+file.partition(".")[2])
 
     def copy_templates(self):
-        self.toolsToCopy = self.get_tool_lst()
+        self.toolsToCopy = self.get_tool_lst().keys()
         self.path = self.projPath_value.get()
         folders = walk(self.sabNar.get())
         foldLst = []
         for k in folders:
             foldLst.append(k[1])
         for i in self.toolsToCopy:
-            copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i), ignore=self.ig_f)
-             
+            copytree(self.sabNar.get() + "\\"+str(i), self.path+ "\\"+str(i), ignore=self.ig_f)  
+        
     def copy_tools(self):
         self.toolsCount = int(self.pocTah.get())+1 #ziskam pocet tahov
         folders = listdir(self.path)        #ziskam strukturu projektovej zlozky
-
+        toolsInitVal = list(self.get_tool_lst().values())
         self.temPath = self.sabNar.get()
+        print (toolsInitVal)
+
         for i in folders:   # iterujem projektovou zlozkou
             if i in self.toolsToCopy:    # kontrola, ci je zlozka zo sablony
                 files = listdir(self.temPath + "\\"+str(i))
@@ -450,7 +467,9 @@ class Window():
                     for k in range(1, self.toolsCount):
                         fileName = self.getFileName(str(j))
                         fileExt = self.getExt(str(j))
-                        copy2(self.temPath + "\\"+str(i)+"\\"+str(j), self.path + "\\"+str(i)+"\\"+fileName+str(k)+fileExt)
+                        initValPos = list(self.toolsToCopy).index(i)
+                        copy2(self.temPath + "\\"+str(i)+"\\"+str(j), self.path + "\\"+str(i)+"\\"+fileName+(str(toolsInitVal[initValPos]+k-1))+fileExt)
+                        print(fileExt)
 
     def exec(self):
         #self.createDir()
