@@ -9,7 +9,6 @@ from openpyxl.styles import numbers
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
 #TODO: Ukazat v hlavnom okne priemernu redukciu
-#TODO: Opravit cislovanie podla startovacieho cisla naradia!
 
 class Window():
     def __init__(self, window):
@@ -95,13 +94,27 @@ class Window():
         self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
         self.tvarRam.grid(row=14, column=2)
 
+        # self.prumRed_value = StringVar(value="Crown")
+        # self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
+        # self.tvarRam.grid(row=14, column=2)
+
         Label(window, text = "mm").grid(row=9, column=3, sticky=W)
         Label(window, text = "mm").grid(row=10, column=3, sticky=W)
         Label(window, text = "mm").grid(row=11, column=3, sticky=W)
         Label(window, text = "°").grid(row=12, column=3, sticky=W)
         Label(window, text = "-").grid(row=13, column=3, sticky=W)
         Label(window, text = "-").grid(row=14, column=3, sticky=W)
+        # Label(window, text = )
         
+        # Pomocne premenne a funkcie
+        dRam = float(self.prumRam.get())
+        dKom = float(self.prumKom.get())
+        tKom = float(self.tlKom.get())
+        tVonkLak = float(self.tlIntLak.get())
+        tVnutLak = float(self.tlExtLak.get())
+        n = int(self.pocTah.get())
+
+
         # Seznam naradi
         Label(window, text = "Seznam nářadí").grid(row=0, column=5, sticky=W)
 
@@ -213,7 +226,9 @@ class Window():
         self.sabNar = Entry(window,textvariable=self.sabNar_value, width=40)
         self.sabNar.grid(row=9, column=6, columnspan=3)
 
-# FUNCTIONS
+#################################################
+################## HLAVNY EXCEL #################
+#################################################
 
     def create_XLS(self):
         wb = Workbook()
@@ -241,7 +256,6 @@ class Window():
         ws1['B16'] = "Prumer nadobky"
         ws1['B17'] = "Prumer zacatku ramena"
         ws1['B18'] = "Prumer kominku"
-
 
         # Druhy stlpec
         ws1['C2'] = "t_dut"
@@ -374,12 +388,18 @@ class Window():
 
         wb.save(dest)
     
+#################################################
+#################### FUNKCIE ####################
+#################################################
+
+    # Funkcia vytvori projektovu zlozku
     def createDir(self):
         self.path = self.projPath_value.get() 
         #self.tools = self.get_tool_lst()
         makedirs(self.path)
         # ! Zapracovat algoritmus pre uz existujuci priecinok
     
+    # Funkcia vygeneruje oznacenie naradia
     def get_numbering(self):
         self.d_nad = self.prumNad_value.get()
         self.h_nad = self.vysNad_value.get()
@@ -390,11 +410,12 @@ class Window():
     def get_init_val(self):
         self.toolsToCopy = self.get_tool_lst()
 
-
     def set_numbering(self):
         self.oznNar.delete(0,END)
         self.oznNar.insert(END,self.get_numbering())
 
+    # Funkcia na volbu naradia, ktore chceme navrhnut
+    # Vrati slovnik "naradie": start. cislo oznacenia
     def get_tool_lst(self):
         self.toolsList = ["Stahovaci krouzky", 
                         "Chytaky", 
@@ -458,8 +479,7 @@ class Window():
         folders = listdir(self.path)        #ziskam strukturu projektovej zlozky
         toolsInitVal = list(self.get_tool_lst().values())
         self.temPath = self.sabNar.get()
-        print (toolsInitVal)
-
+ 
         for i in folders:   # iterujem projektovou zlozkou
             if i in self.toolsToCopy:    # kontrola, ci je zlozka zo sablony
                 files = listdir(self.temPath + "\\"+str(i))
@@ -469,8 +489,22 @@ class Window():
                         fileExt = self.getExt(str(j))
                         initValPos = list(self.toolsToCopy).index(i)
                         copy2(self.temPath + "\\"+str(i)+"\\"+str(j), self.path + "\\"+str(i)+"\\"+fileName+(str(toolsInitVal[initValPos]+k-1))+fileExt)
-                        print(fileExt)
 
+#################################################
+####### KOPIROVANIE PARAMETROV DO EXCELOV #######
+#################################################
+
+# Vezmem z kazdej zlozky naradia excely, vytvorim si z nich pole ich nazvov
+# Iterujem vsetkymi excelmi, zhodnotim, ci sa ich nazov zhoduje s oznacenim naradia v hlavnom exceli
+# Ak sa zhoduje, bezmem hodnotu z referencnej bunky hlavneho excelu a nakopirujem ju do 
+# Vezmem z hlavneho excelu hodnoty parametrov a nakopirujem ich do pozadovanych riadkov v jednotlivych excelov s parametrami
+
+
+
+
+#################################################
+############# SPUSTENIE HLAVNEHO OKNA ###########
+#################################################
     def exec(self):
         #self.createDir()
         self.copy_templates()
