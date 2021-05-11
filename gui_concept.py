@@ -69,6 +69,7 @@ class Window():
         Label(window, text = "Ůhel ramena").grid(row=12, column=1, sticky=W)
         Label(window, text = "Počet tahů").grid(row=13, column=1, sticky=W)
         Label(window, text = "Tvar ramene").grid(row=14, column=1, sticky=W)
+        Label(window, text = "Redukce").grid(row=15, column=1, sticky=W)
 
         self.prumRam_value = DoubleVar(value=40.23)
         self.prumRam = Entry(window,textvariable=self.prumRam_value, width=5)
@@ -94,9 +95,9 @@ class Window():
         self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
         self.tvarRam.grid(row=14, column=2)
 
-        # self.prumRed_value = StringVar(value="Crown")
-        # self.tvarRam = Entry(window,textvariable=self.tvarRam_value, width=5)
-        # self.tvarRam.grid(row=14, column=2)
+        self.prumRed_value = DoubleVar()
+        self.prumRed = Entry(window,textvariable=self.prumRed_value, width=5)
+        self.prumRed.grid(row=15, column=2)
 
         Label(window, text = "mm").grid(row=9, column=3, sticky=W)
         Label(window, text = "mm").grid(row=10, column=3, sticky=W)
@@ -104,17 +105,8 @@ class Window():
         Label(window, text = "°").grid(row=12, column=3, sticky=W)
         Label(window, text = "-").grid(row=13, column=3, sticky=W)
         Label(window, text = "-").grid(row=14, column=3, sticky=W)
-        # Label(window, text = )
+        Label(window, text = "%").grid(row=15, column=3, sticky=W)
         
-        # Pomocne premenne a funkcie
-        dRam = float(self.prumRam.get())
-        dKom = float(self.prumKom.get())
-        tKom = float(self.tlKom.get())
-        tVonkLak = float(self.tlIntLak.get())
-        tVnutLak = float(self.tlExtLak.get())
-        n = int(self.pocTah.get())
-
-
         # Seznam naradi
         Label(window, text = "Seznam nářadí").grid(row=0, column=5, sticky=W)
 
@@ -194,9 +186,6 @@ class Window():
         self.projPath = Entry(window,textvariable=self.projPath_value, width=40)
         self.projPath.grid(row=21, column=1, columnspan=3)
         
-        b4=Button(window, text="Vytvor", width = 5, command=self.createDir)
-        b4.grid(row=21, column=4)
-
         # Oznacenie naradia
         oznNar = Label(window, text = "Oznacenie naradia:")
         oznNar.grid(row=22, column=0, sticky=W)
@@ -204,9 +193,6 @@ class Window():
         self.oznNar_value = StringVar()
         self.oznNar = Entry(window,textvariable=self.oznNar_value, width=40)
         self.oznNar.grid(row=22, column=1, columnspan=3)
-
-        b5=Button(window, text="Vytvor", width = 5,command=self.set_numbering)
-        b5.grid(row=22, column=4)
 
         # Tlacitka
         b1=Button(window, text="OK",  width = 10, command=self.exec)
@@ -217,6 +203,15 @@ class Window():
 
         b3=Button(window, text="Konec", width = 10, command=self.window.destroy)
         b3.grid(row=23, column=2)
+
+        b4=Button(window, text="Vytvor", width = 5, command=self.createDir)
+        b4.grid(row=21, column=4)
+
+        b5=Button(window, text="Vytvor", width = 5,command=self.set_numbering)
+        b5.grid(row=22, column=4)
+
+        b6=Button(window, text="Přepočítat", width = 8,command=self.set_red)
+        b6.grid(row=15, column=4)
 
         # cesta k sablonam
         sabNar = Label(window, text = "Cesta k šablonám nářadí:")
@@ -413,6 +408,22 @@ class Window():
     def set_numbering(self):
         self.oznNar.delete(0,END)
         self.oznNar.insert(END,self.get_numbering())
+
+    def get_reduction(self):
+        # Priemerna redukcia
+        self.dRam = float(self.prumRam.get())
+        self.dKom = float(self.prumKom.get())
+        self.tKom = float(self.tlKom.get())
+        self.tVonkLak = float(self.tlIntLak.get())
+        self.tVnutLak = float(self.tlExtLak.get())
+        self.tLak = self.tVonkLak + self.tVnutLak
+        self.n = int(self.pocTah.get())
+        self.prum_red = round((((self.dRam - (self.dKom + 2*self.tKom + 2*self.tLak))/(self.n))/((self.dRam + self.dKom)/2) * 100),2)
+        return self.prum_red
+
+    def set_red(self):
+        self.prumRed.delete(0,END)
+        self.prumRed_value.set(self.get_reduction())
 
     # Funkcia na volbu naradia, ktore chceme navrhnut
     # Vrati slovnik "naradie": start. cislo oznacenia
