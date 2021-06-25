@@ -8,7 +8,6 @@ from openpyxl.styles import numbers
 
 #TODO: REFACTOR!!!
 #TODO: Zaskrtat vsetky naradia
-#TODO: Ukazat v hlavnom okne priemernu redukciu
 
 class Window():
     def __init__(self, window):
@@ -234,6 +233,10 @@ class Window():
         ws1.column_dimensions["B"].width = 25.0
         ws2.column_dimensions["B"].width = 25.0
 
+#################################################
+################### Prvy Sheet ##################
+#################################################
+
         # Prvy stlpec
         ws1['B2'] = "Stena dutinky"
         ws1['B3'] = "Stena ramena"
@@ -311,6 +314,10 @@ class Window():
         ws1['E16'] = "mm"
         ws1['E17'] = "mm"      
         ws1['E18'] = "mm"   
+
+#################################################
+#################### Naradie ####################
+#################################################
         
         # Stahovaci krouzky
         ws2['A2'] = "Stahovací kroužky"
@@ -505,13 +512,20 @@ class Window():
 ####### KOPIROVANIE PARAMETROV DO EXCELOV #######
 #################################################
 
-# Vezmem z kazdej zlozky naradia excely, vytvorim si z nich pole ich nazvov
-# Iterujem vsetkymi excelmi, zhodnotim, ci sa ich nazov zhoduje s oznacenim naradia v hlavnom exceli
-# Ak sa zhoduje, bezmem hodnotu z referencnej bunky hlavneho excelu a nakopirujem ju do 
-# Vezmem z hlavneho excelu hodnoty parametrov a nakopirujem ich do pozadovanych riadkov v jednotlivych excelov s parametrami
+# pre kazdy typ naradia:
 
+# 1. iterujem v zlozke kazdy subor s priponou .xls
+# 2. ulozim si nazov suboru do stringu
+# 3. vyhladam string v hlavnom exceli
+# 4. presmerujem sa na riadok, obsahujuci string nazvu suboru
+# 5. urcim poziciu bunky
+# 6. vytiahnem hodnotu z bunky
+# 7. otvorim subor so stringom nazvu
+# 8. vyhladam poziciu bunky, ktoru chcem prepisat
+# 9. vlozim hodnotu
 
-
+    def get_xcels(self):
+        pass
 
 #################################################
 ############# SPUSTENIE HLAVNEHO OKNA ###########
