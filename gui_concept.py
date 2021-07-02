@@ -525,6 +525,11 @@ class Window():
 # 9. vlozim hodnotu
 
     def get_xcels(self):
+        # vytvorit zoznam nazvov xls suborov v adresari konkretneho naradia BEZ PRIPONY
+        
+        # najst podla kazdeho stringu(suboru) v tom zozname ZHODNY riadok v hlavnom exceli navrh_naradi (stlpec B)
+        # vytvorit pole hodnot daneho parametru (napr priemery chytaku D)
+        # prekopirovat hodnoty z z pola hodnot rozmeru natvrdo do prislusnej bunky v exceli naradia (napr C26 -> B2)
         pass
 
 #################################################
